@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="WZCexD" name="Demo" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              pluginFormats="buildStandalone">
+  <MAINGROUP id="LuNubj" name="Demo">
+    <GROUP id="{09E329A4-4ADD-F6E7-08C4-71C952B00BBE}" name="Source">
+      <GROUP id="{05D8188D-08FE-AB9E-0E42-B0CC178FA305}" name="UI">
+        <FILE id="a9zRUx" name="SpectrumComponent.h" compile="0" resource="0"
+              file="Source/UI/SpectrumComponent.h"/>
+        <FILE id="Cw4ofA" name="ButtonLook.cpp" compile="1" resource="0" file="Source/UI/ButtonLook.cpp"/>
+        <FILE id="W9XOLb" name="ButtonLook.h" compile="0" resource="0" file="Source/UI/ButtonLook.h"/>
+        <FILE id="aq33Ng" name="CharacteristicFunctionComponent.cpp" compile="1"
+              resource="0" file="Source/UI/CharacteristicFunctionComponent.cpp"/>
+        <FILE id="aF6Jyc" name="CharacteristicFunctionComponent.h" compile="0"
+              resource="0" file="Source/UI/CharacteristicFunctionComponent.h"/>
+        <FILE id="jvF3c8" name="LevelMeterComponent.cpp" compile="1" resource="0"
+              file="Source/UI/LevelMeterComponent.cpp"/>
+        <FILE id="GLsssy" name="LevelMeterComponent.h" compile="0" resource="0"
+              file="Source/UI/LevelMeterComponent.h"/>
+        <FILE id="dTC6RD" name="SliderLook.cpp" compile="1" resource="0" file="Source/UI/SliderLook.cpp"/>
+        <FILE id="HOJDnD" name="SliderLook.h" compile="0" resource="0" file="Source/UI/SliderLook.h"/>
+        <FILE id="flg5xN" name="SpectrumComponent.cpp" compile="1" resource="0"
+              file="Source/UI/SpectrumComponent.cpp"/>
+        <GROUP id="{AE31220C-9BA1-4F65-EF9A-F68C37CCDE34}" name="Image">
+          <FILE id="cuGRir" name="btn1.png" compile="0" resource="1" file="Source/UI/Image/btn1.png"/>
+          <FILE id="CdIPC5" name="btn2.png" compile="0" resource="1" file="Source/UI/Image/btn2.png"/>
+          <FILE id="c9qzqx" name="btn3.png" compile="0" resource="1" file="Source/UI/Image/btn3.png"/>
+          <FILE id="PYhx7w" name="bulbGrid.png" compile="0" resource="1" file="Source/UI/Image/bulbGrid.png"/>
+          <FILE id="or7RRb" name="grillGrid.png" compile="0" resource="1" file="Source/UI/Image/grillGrid.png"/>
+          <FILE id="tZrbBH" name="knob.png" compile="0" resource="1" file="Source/UI/Image/knob.png"/>
+          <FILE id="eT3fDs" name="panel.png" compile="0" resource="1" file="Source/UI/Image/panel.png"/>
+          <FILE id="s3gaJ4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
+          <FILE id="VYBu0e" name="switchBtn2.png" compile="0" resource="1" file="Source/UI/Image/switchBtn2.png"/>
+        </GROUP>
+      </GROUP>
+      <FILE id="qi06cr" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="mi2NU9" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="TQQ5UZ" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="tM94aM" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Demo"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Demo"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../Program Files/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Demo"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Demo"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../Program Files/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
