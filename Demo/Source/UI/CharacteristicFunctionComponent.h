@@ -41,5 +41,7 @@ private:
     
     Label option1, option2, option3, option4;
 
+    Image option[4];
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CharacteristicFunctionComponent)
 };

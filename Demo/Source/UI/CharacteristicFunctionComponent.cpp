@@ -14,6 +14,11 @@
 //==============================================================================
 CharacteristicFunctionComponent::CharacteristicFunctionComponent(DemoAudioProcessor& p) : processor(p)
 {
+    option[0] = ImageCache::getFromMemory(BinaryData::option1_png, BinaryData::option1_pngSize);
+    option[1] = ImageCache::getFromMemory(BinaryData::option2_png, BinaryData::option2_pngSize);
+    option[2] = ImageCache::getFromMemory(BinaryData::option3_png, BinaryData::option3_pngSize);
+    option[3] = ImageCache::getFromMemory(BinaryData::option4_png, BinaryData::option4_pngSize);
+    
     addAndMakeVisible(modeButton);
     modeButton.addListener(this);
     modeButton.setLookAndFeel(&buttonLook);
@@ -52,8 +57,16 @@ CharacteristicFunctionComponent::~CharacteristicFunctionComponent()
 //==============================================================================
 void CharacteristicFunctionComponent::paint (Graphics& g)
 {
-    g.setColour(Colours::white);
-    g.fillRect(getWindowArea());
+    g.setColour(Colours::black);
+    auto bounds = Rectangle<int>(getWindowArea().getX() - 1, getWindowArea().getY() - 1, getWindowArea().getWidth() + 2, getWindowArea().getHeight() + 2);
+    g.fillRoundedRectangle(bounds.toFloat(), 2.f);
+    
+    g.drawImageWithin(option[processor.getDistortionType()],
+        getWindowArea().getX(),
+        getWindowArea().getY(),
+        getWindowArea().getWidth(),
+        getWindowArea().getHeight(),
+        RectanglePlacement::stretchToFit);
 }
 
 //==============================================================================
@@ -150,4 +163,6 @@ void CharacteristicFunctionComponent::setLabelColour()
         jassertfalse;
         break;
     }
+
+    repaint();
 }
