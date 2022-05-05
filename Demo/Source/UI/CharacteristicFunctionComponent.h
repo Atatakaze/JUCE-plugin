@@ -31,6 +31,7 @@ public:
 
     Rectangle<int> getWindowArea();
     Rectangle<int>* getComponentArea();
+    void setLabelColour();
 private:
     DemoAudioProcessor& processor;
 
@@ -38,7 +39,7 @@ private:
     ButtonLook buttonLook;
     TextButton modeButton{ " " };
     
-    Label option1, option2, option3;
+    Label option1, option2, option3, option4;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CharacteristicFunctionComponent)
 };

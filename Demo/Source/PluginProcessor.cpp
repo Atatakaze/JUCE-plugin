@@ -330,13 +330,16 @@ void DemoAudioProcessor::updateDistortionType()
     //}
     switch (distortionType)
     {
-    case 0: // tanh
+    case 0: // Tanh
         distortion.functionToUse = [](float x) { return tanh(x); };
         break;
-    case 1: // Soft clipping
+    case 1: // Arctanh
+        distortion.functionToUse = [](float x) { return (2.0f / MathConstants<float>::pi) * atan(x * 10); };
+        break;
+    case 2: // Soft clipping
         distortion.functionToUse = [](float x) { return jlimit<float>(-0.8f, 0.8f, x); };
         break;
-    case 2: // Hard clipping
+    case 3: // Hard clipping
         distortion.functionToUse = [](float x) { return jlimit<float>(-0.3f, 0.3f, x); };
         break;
     default:

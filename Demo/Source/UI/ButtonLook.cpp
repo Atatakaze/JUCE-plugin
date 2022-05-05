@@ -21,6 +21,7 @@ ButtonLook::ButtonLook()
     btn[0] = ImageCache::getFromMemory(BinaryData::btn1_png, BinaryData::btn1_pngSize);
     btn[1] = ImageCache::getFromMemory(BinaryData::btn2_png, BinaryData::btn2_pngSize);
     btn[2] = ImageCache::getFromMemory(BinaryData::btn3_png, BinaryData::btn3_pngSize);
+    btn[3] = ImageCache::getFromMemory(BinaryData::btn4_png, BinaryData::btn4_pngSize);
 }
 
 

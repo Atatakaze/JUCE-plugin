@@ -309,6 +309,10 @@ private:
     float previousOutputGain;
 
     // characteristic funciton
+    // distortionType = 0 -> Tanh
+    // distortionType = 1 -> Arctan
+    // distortionType = 2 -> Soft
+    // distortionType = 3 -> Hard
     int distortionType = 0;
     dsp::WaveShaper<float> distortion;
 

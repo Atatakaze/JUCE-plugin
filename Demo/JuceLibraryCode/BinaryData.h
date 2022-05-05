@@ -12,10 +12,13 @@ namespace BinaryData
     const int            btn1_pngSize = 9337;
 
     extern const char*   btn2_png;
-    const int            btn2_pngSize = 9274;
+    const int            btn2_pngSize = 9320;
 
     extern const char*   btn3_png;
-    const int            btn3_pngSize = 9150;
+    const int            btn3_pngSize = 9398;
+
+    extern const char*   btn4_png;
+    const int            btn4_pngSize = 9150;
 
     extern const char*   bulbGrid_png;
     const int            bulbGrid_pngSize = 7468;
@@ -36,7 +39,7 @@ namespace BinaryData
     const int            switchBtn2_pngSize = 3223;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 9;
+    const int namedResourceListSize = 10;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

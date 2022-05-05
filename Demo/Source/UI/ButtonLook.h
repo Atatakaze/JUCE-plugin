@@ -35,10 +35,11 @@ public:
 
 private:
     // stage = 0 -> tanh
-    // stage = 1 -> soft
-    // stage = 2 -> hard
+    // stage = 1 -> arctan
+    // stage = 2 -> soft
+    // stage = 3 -> hard
     int stage = 0;
-    Image btn[3];
+    Image btn[4];
 };
 
 /*
