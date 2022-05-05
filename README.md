@@ -6,7 +6,7 @@
 
 - **Program** 
 
-  An audio plug-in with the spectrum and the level meter. 
+  > An audio plug-in with the spectrum and the level meter. 
   
   <img height= 300 src="https://user-images.githubusercontent.com/89720769/166882493-39eabea1-13f0-48aa-8618-a968b705c6fa.png"> 
   
