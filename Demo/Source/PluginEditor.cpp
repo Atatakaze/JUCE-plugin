@@ -16,6 +16,11 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     // SpectrumComponent
     addAndMakeVisible(spectrumComponent);
 
+    // Waveform
+    addAndMakeVisible(processor.waveViewer);
+    processor.waveViewer.setColours(Colours::black, Colours::whitesmoke.withAlpha(0.5f));
+    processor.waveViewer.setVisible(false);
+
     // LevelMeterComponent
     addAndMakeVisible(levelMeter);
 
@@ -104,6 +109,9 @@ void DemoAudioProcessorEditor::resized()
     bounds.removeFromLeft(5);
     spectrumComponent.setBounds(bounds);
 
+    // waveform
+    processor.waveViewer.setBounds(bounds);
+
     // panel background color
     int side = 7;
     auto panel = Rectangle<int>(panelArea.getX() + side, panelArea.getY() + side, (panelArea.getWidth() * 0.8) - side, panelArea.getHeight() - (2 * side));
@@ -160,11 +168,13 @@ void DemoAudioProcessorEditor::buttonClicked(Button* button)
         {
             buttonLook2.setStage(1);
             spectrumComponent.setVisible(false);
+            processor.waveViewer.setVisible(true);
         }
         else
         {
             buttonLook2.setStage(0);
             spectrumComponent.setVisible(true);
+            processor.waveViewer.setVisible(false);
         }
     }
 }

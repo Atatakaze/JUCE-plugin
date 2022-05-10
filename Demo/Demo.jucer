@@ -2,10 +2,14 @@
 
 <JUCERPROJECT id="WZCexD" name="Demo" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              pluginFormats="buildVST3">
+              pluginFormats="buildStandalone">
   <MAINGROUP id="LuNubj" name="Demo">
     <GROUP id="{09E329A4-4ADD-F6E7-08C4-71C952B00BBE}" name="Source">
       <GROUP id="{05D8188D-08FE-AB9E-0E42-B0CC178FA305}" name="UI">
+        <FILE id="lZgVj2" name="WaveformComponent.cpp" compile="1" resource="0"
+              file="Source/UI/WaveformComponent.cpp"/>
+        <FILE id="SpmeZb" name="WaveformComponent.h" compile="0" resource="0"
+              file="Source/UI/WaveformComponent.h"/>
         <FILE id="a9zRUx" name="SpectrumComponent.h" compile="0" resource="0"
               file="Source/UI/SpectrumComponent.h"/>
         <FILE id="Cw4ofA" name="ButtonLook.cpp" compile="1" resource="0" file="Source/UI/ButtonLook.cpp"/>

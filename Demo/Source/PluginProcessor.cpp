@@ -13,13 +13,13 @@ using namespace juce;
 DemoAudioProcessor::DemoAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
-#if ! JucePlugin_IsMidiEffect
-#if ! JucePlugin_IsSynth
-        .withInput("Input", AudioChannelSet::stereo(), true)
-#endif
-        .withOutput("Output", AudioChannelSet::stereo(), true)
-#endif
-    ),
+        #if ! JucePlugin_IsMidiEffect
+            #if ! JucePlugin_IsSynth
+                .withInput("Input", AudioChannelSet::stereo(), true)
+            #endif
+                .withOutput("Output", AudioChannelSet::stereo(), true)
+        #endif
+    ), waveViewer(2),
 #endif
     parameters(*this, nullptr, Identifier("APVT"),
         {
@@ -53,6 +53,10 @@ DemoAudioProcessor::DemoAudioProcessor()
 
     // characteristic function
     distortion.functionToUse = [](float x) { return tanh(x); };
+
+    // waveform
+    waveViewer.setRepaintRate(30);
+    waveViewer.setBufferSize(1024);
 }
 
 
@@ -109,6 +113,9 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     // spectrum curve
     leftChannelFifo.prepare(numSamples);
     rightChannelFifo.prepare(numSamples);
+
+    // waveform viewer
+    waveViewer.clear();
 
     // level meter
     inputLevelLeft.reset(sampleRate, 0.5);
@@ -186,6 +193,9 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         // spectrum Curve
         leftChannelFifo.update(buffer);
         rightChannelFifo.update(buffer);
+
+        // waveform viewer
+        waveViewer.pushBuffer(buffer);
 
         // output level meter - smooth
         outputLevelLeft.skip(numSamples);

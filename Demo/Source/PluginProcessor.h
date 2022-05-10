@@ -216,6 +216,9 @@ public:
     SingleChannelSampleFifo<BlockType> leftChannelFifo{ Channel::Left };
     SingleChannelSampleFifo<BlockType> rightChannelFifo{ Channel::Right };
 
+    // waveform viewer
+    AudioVisualiserComponent waveViewer;
+
     //==============================================================================
     // levelmeter
     float getRmsValue(const int, const int) const;
