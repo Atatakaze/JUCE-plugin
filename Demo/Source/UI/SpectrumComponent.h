@@ -123,13 +123,13 @@ struct AnalyzerPathGenerator
         int numBins = (int)fftSize / 2;
 
         PathType p;
-        p.preallocateSpace(3 * (int)fftBounds.getWidth());
+        p.preallocateSpace(3 * ((int)fftBounds.getWidth()+2));
 
         auto map = [bottom, top, negativeInfinity](float v)
         {
-            return juce::jmap(v,
+            return jmap(v,
                 negativeInfinity, 0.f,
-                float(bottom + 10), top);
+                float(bottom+5), top);
         };
 
         auto y = map(renderData[0]);
@@ -152,12 +152,12 @@ struct AnalyzerPathGenerator
             if (!std::isnan(y) && !std::isinf(y))
             {
                 auto binFreq = binNum * binWidth;
-                auto normalizedBinX = juce::mapFromLog10(binFreq, 20.f, 20000.f);
+                auto normalizedBinX = mapFromLog10(binFreq, 20.f, 20000.f);
                 int binX = std::floor(normalizedBinX * width);
                 p.lineTo(binX, y);
             }
         }
-        p.lineTo(fftBounds.getRight(), fftBounds.getBottom());
+        p.lineTo(width, fftBounds.getBottom());
         p.lineTo(0, fftBounds.getBottom());
 
         pathFifo.push(p);

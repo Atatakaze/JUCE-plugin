@@ -76,32 +76,8 @@ void SpectrumComponent::paint(Graphics& g)
     // draw spectrum
     g.drawImage(background, getLocalBounds().toFloat());
 
-    auto responseArea = getResponseArea();
+    auto responseArea = getRenderArea();
     auto w = responseArea.getWidth();
-
-    std::vector<double> mags;
-    mags.resize(w);
-    for (int i = 0; i < w; ++i)
-    {
-        double mag = 1.f;
-        mags[i] = Decibels::gainToDecibels(mag);
-    }
-
-    Path responseCurve;
-
-    const double outputMin = responseArea.getBottom();
-    const double outputMax = responseArea.getY();
-    auto map = [outputMin, outputMax](double input)
-    {
-        return jmap(input, -48.0, 0.0, outputMin, outputMax);
-    };
-
-    responseCurve.startNewSubPath(responseArea.getX(), map(mags.front()));
-
-    for (size_t i = 1; i < mags.size(); ++i)
-    {
-        responseCurve.lineTo(responseArea.getX() + i, map(mags[i]));
-    }
 
     // draw left channel spectrum curve
     auto leftChannelFFTPath = leftPathProducer.getPath();
@@ -278,7 +254,7 @@ Rectangle<int> SpectrumComponent::getRenderArea()
 {
     auto bounds = getResponseArea();
     //bounds.removeFromBottom(10);
-    //bounds.removeFromRight(10);
+    //bounds.removeFromRight(20);
 
     return bounds;
 }
