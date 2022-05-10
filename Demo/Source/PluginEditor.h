@@ -9,6 +9,7 @@
 #include "UI/SliderLook.h"
 #include "UI/ButtonLook.h"
 #include "UI/SpectrumComponent.h"
+#include "UI/WaveformComponent.h"
 #include "UI/LevelMeterComponent.h"
 #include "UI/CharacteristicFunctionComponent.h"
 
@@ -62,6 +63,9 @@ private:
 
     // spectrum Curve
     SpectrumComponent spectrumComponent;
+
+    // waveform component
+    WaveformComponent waveformComponent;
 
     // level meter for right and left channel
     LevelMeterComponent levelMeter;

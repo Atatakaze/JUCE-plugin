@@ -11,15 +11,14 @@
 //==============================================================================
 DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor(&p), processor(p), valueTreeState(vts),
-    spectrumComponent(processor), levelMeter(processor), characteristicFunctionComponent(processor)
+    spectrumComponent(processor), levelMeter(processor), characteristicFunctionComponent(processor), waveformComponent(processor)
 {
     // SpectrumComponent
     addAndMakeVisible(spectrumComponent);
 
     // Waveform
-    addAndMakeVisible(processor.waveViewer);
-    processor.waveViewer.setColours(Colours::black, Colours::whitesmoke.withAlpha(0.5f));
-    processor.waveViewer.setVisible(false);
+    addAndMakeVisible(waveformComponent);
+    waveformComponent.setVisible(false);
 
     // LevelMeterComponent
     addAndMakeVisible(levelMeter);
@@ -103,14 +102,14 @@ void DemoAudioProcessorEditor::resized()
     g.fillRoundedRectangle(panelArea.toFloat(), 10.f);
     g.fillRoundedRectangle(bounds.toFloat(), 10.f);
 
-    // spectrum component
     bounds.removeFromTop(5);
     bounds.removeFromBottom(10);
     bounds.removeFromLeft(5);
-    spectrumComponent.setBounds(bounds);
 
-    // waveform
-    processor.waveViewer.setBounds(bounds);
+    // spectrum component
+    spectrumComponent.setBounds(bounds);
+    // waveform component
+    waveformComponent.setBounds(bounds);
 
     // panel background color
     int side = 7;
@@ -168,13 +167,13 @@ void DemoAudioProcessorEditor::buttonClicked(Button* button)
         {
             buttonLook2.setStage(1);
             spectrumComponent.setVisible(false);
-            processor.waveViewer.setVisible(true);
+            waveformComponent.setVisible(true);
         }
         else
         {
             buttonLook2.setStage(0);
             spectrumComponent.setVisible(true);
-            processor.waveViewer.setVisible(false);
+            waveformComponent.setVisible(false);
         }
     }
 }
