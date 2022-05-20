@@ -33,7 +33,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
         valueTreeState, "Input Gain", inputGainSlider));
 
     addAndMakeVisible(inputGainLabel);
-    inputGainLabel.setText("Input Gain", dontSendNotification);
+    inputGainLabel.setText("Gain", dontSendNotification);
     inputGainLabel.setFont(Font(16.0f, Font::bold));
     inputGainLabel.setColour(Label::textColourId, Colour(180, 136, 245));
     inputGainLabel.setJustificationType(Justification::centred);
@@ -48,7 +48,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
         valueTreeState, "Output Gain", outputGainSlider));
 
     addAndMakeVisible(outputGainLabel);
-    outputGainLabel.setText("Output Gain", dontSendNotification);
+    outputGainLabel.setText("Level", dontSendNotification);
     outputGainLabel.setFont(Font(16.0f, Font::bold));
     outputGainLabel.setColour(Label::textColourId, Colour(157, 249, 241));
     outputGainLabel.setJustificationType(Justification::centred);
