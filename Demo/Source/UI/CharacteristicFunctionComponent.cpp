@@ -56,11 +56,7 @@ CharacteristicFunctionComponent::~CharacteristicFunctionComponent()
 
 //==============================================================================
 void CharacteristicFunctionComponent::paint (Graphics& g)
-{
-    g.setColour(Colours::black);
-    auto bounds = Rectangle<int>(getWindowArea().getX() - 1, getWindowArea().getY() - 1, getWindowArea().getWidth() + 2, getWindowArea().getHeight() + 2);
-    g.fillRoundedRectangle(bounds.toFloat(), 2.f);
-    
+{    
     g.drawImageWithin(option[processor.getDistortionType()],
         getWindowArea().getX(),
         getWindowArea().getY(),
@@ -99,10 +95,10 @@ Rectangle<int> CharacteristicFunctionComponent::getWindowArea()
 {
     auto bounds = getLocalBounds();
 
-    bounds.removeFromTop(30);
-    bounds.removeFromBottom(10);
-    bounds.removeFromRight(30);
-    bounds.removeFromLeft(30);
+    bounds.removeFromTop(25);
+    bounds.removeFromBottom(5);
+    bounds.removeFromRight(25);
+    bounds.removeFromLeft(25);
 
     return bounds;
 }
