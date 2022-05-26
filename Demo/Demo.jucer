@@ -7,18 +7,9 @@
     <GROUP id="{3A4810AD-3114-AA9D-F6F9-81957D70F025}" name="Source">
       <GROUP id="{D12DD16B-1F62-71B8-9D61-87E68463F0D5}" name="UI">
         <GROUP id="{31B9C62C-F92E-E941-6265-171F83BFA3B3}" name="Image">
-          <FILE id="dj3Bwm" name="btn1.png" compile="0" resource="1" file="Source/UI/Image/btn1.png"/>
-          <FILE id="rb2Kog" name="btn2.png" compile="0" resource="1" file="Source/UI/Image/btn2.png"/>
-          <FILE id="gIVaxX" name="btn3.png" compile="0" resource="1" file="Source/UI/Image/btn3.png"/>
-          <FILE id="dFH2XV" name="btn4.png" compile="0" resource="1" file="Source/UI/Image/btn4.png"/>
           <FILE id="poP9hF" name="bulbGrid.png" compile="0" resource="1" file="Source/UI/Image/bulbGrid.png"/>
           <FILE id="Zv9aNt" name="grillGrid.png" compile="0" resource="1" file="Source/UI/Image/grillGrid.png"/>
           <FILE id="OSkAr6" name="knob.png" compile="0" resource="1" file="Source/UI/Image/knob.png"/>
-          <FILE id="i56Pqy" name="option1.png" compile="0" resource="1" file="Source/UI/Image/option1.png"/>
-          <FILE id="zxiy4Q" name="option2.png" compile="0" resource="1" file="Source/UI/Image/option2.png"/>
-          <FILE id="YFXvv9" name="option3.png" compile="0" resource="1" file="Source/UI/Image/option3.png"/>
-          <FILE id="el910D" name="option4.png" compile="0" resource="1" file="Source/UI/Image/option4.png"/>
-          <FILE id="lFbEQE" name="panel.png" compile="0" resource="1" file="Source/UI/Image/panel.png"/>
           <FILE id="cmuFR4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
           <FILE id="LUQsGX" name="switchBtn2.png" compile="0" resource="1" file="Source/UI/Image/switchBtn2.png"/>
         </GROUP>

@@ -134,7 +134,6 @@ void DemoAudioProcessorEditor::resized()
     // --- RTF monitor --- //
     auto RTFArea = Rectangle<int>(40, outputGainLabelArea.getBottom() + 10, 150, 30);
     bufferTimeLabel.setBounds(RTFArea);
-    g.drawRect(RTFArea);
 }
 
 //==============================================================================
