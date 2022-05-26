@@ -8,10 +8,8 @@
 #include "PluginProcessor.h"
 #include "UI/SliderLook.h"
 #include "UI/ButtonLook.h"
-#include "UI/SpectrumComponent.h"
 #include "UI/WaveformComponent.h"
 #include "UI/LevelMeterComponent.h"
-#include "UI/CharacteristicFunctionComponent.h"
 
 #include <string>
 
@@ -61,9 +59,6 @@ private:
     std::unique_ptr<SliderAttachment> inputGainAttachment;
     std::unique_ptr<SliderAttachment> outputGainAttachment;
 
-    // spectrum Curve
-    SpectrumComponent spectrumComponent;
-
     // waveform component
     WaveformComponent waveformComponent;
 
@@ -71,13 +66,9 @@ private:
     LevelMeterComponent levelMeter;
 
     // appearence
-    Image panelBg;
     SliderLook slider1, slider2;
-    ButtonLook2 buttonLook2;
+    ButtonLook buttonLook;
     TextButton switchBtn{ " " };
-
-    // characteristic function component
-    CharacteristicFunctionComponent characteristicFunctionComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessorEditor)
 };

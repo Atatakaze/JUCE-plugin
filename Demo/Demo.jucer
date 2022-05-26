@@ -1,55 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="WZCexD" name="Demo" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="eDpDwo" name="Demo" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               pluginFormats="buildStandalone">
-  <MAINGROUP id="LuNubj" name="Demo">
-    <GROUP id="{09E329A4-4ADD-F6E7-08C4-71C952B00BBE}" name="Source">
-      <GROUP id="{05D8188D-08FE-AB9E-0E42-B0CC178FA305}" name="UI">
-        <FILE id="lZgVj2" name="WaveformComponent.cpp" compile="1" resource="0"
-              file="Source/UI/WaveformComponent.cpp"/>
-        <FILE id="SpmeZb" name="WaveformComponent.h" compile="0" resource="0"
-              file="Source/UI/WaveformComponent.h"/>
-        <FILE id="a9zRUx" name="SpectrumComponent.h" compile="0" resource="0"
-              file="Source/UI/SpectrumComponent.h"/>
-        <FILE id="Cw4ofA" name="ButtonLook.cpp" compile="1" resource="0" file="Source/UI/ButtonLook.cpp"/>
-        <FILE id="W9XOLb" name="ButtonLook.h" compile="0" resource="0" file="Source/UI/ButtonLook.h"/>
-        <FILE id="aq33Ng" name="CharacteristicFunctionComponent.cpp" compile="1"
-              resource="0" file="Source/UI/CharacteristicFunctionComponent.cpp"/>
-        <FILE id="aF6Jyc" name="CharacteristicFunctionComponent.h" compile="0"
-              resource="0" file="Source/UI/CharacteristicFunctionComponent.h"/>
-        <FILE id="jvF3c8" name="LevelMeterComponent.cpp" compile="1" resource="0"
-              file="Source/UI/LevelMeterComponent.cpp"/>
-        <FILE id="GLsssy" name="LevelMeterComponent.h" compile="0" resource="0"
-              file="Source/UI/LevelMeterComponent.h"/>
-        <FILE id="dTC6RD" name="SliderLook.cpp" compile="1" resource="0" file="Source/UI/SliderLook.cpp"/>
-        <FILE id="HOJDnD" name="SliderLook.h" compile="0" resource="0" file="Source/UI/SliderLook.h"/>
-        <FILE id="flg5xN" name="SpectrumComponent.cpp" compile="1" resource="0"
-              file="Source/UI/SpectrumComponent.cpp"/>
-        <GROUP id="{AE31220C-9BA1-4F65-EF9A-F68C37CCDE34}" name="Image">
-          <FILE id="wMRMaH" name="option1.png" compile="0" resource="1" file="Source/UI/Image/option1.png"/>
-          <FILE id="m683Vs" name="option2.png" compile="0" resource="1" file="Source/UI/Image/option2.png"/>
-          <FILE id="Y7u8qF" name="option3.png" compile="0" resource="1" file="Source/UI/Image/option3.png"/>
-          <FILE id="Xj20AU" name="option4.png" compile="0" resource="1" file="Source/UI/Image/option4.png"/>
-          <FILE id="cuGRir" name="btn1.png" compile="0" resource="1" file="Source/UI/Image/btn1.png"/>
-          <FILE id="CdIPC5" name="btn2.png" compile="0" resource="1" file="Source/UI/Image/btn2.png"/>
-          <FILE id="c9qzqx" name="btn3.png" compile="0" resource="1" file="Source/UI/Image/btn3.png"/>
-          <FILE id="mdzLlE" name="btn4.png" compile="0" resource="1" file="Source/UI/Image/btn4.png"/>
-          <FILE id="PYhx7w" name="bulbGrid.png" compile="0" resource="1" file="Source/UI/Image/bulbGrid.png"/>
-          <FILE id="or7RRb" name="grillGrid.png" compile="0" resource="1" file="Source/UI/Image/grillGrid.png"/>
-          <FILE id="tZrbBH" name="knob.png" compile="0" resource="1" file="Source/UI/Image/knob.png"/>
-          <FILE id="eT3fDs" name="panel.png" compile="0" resource="1" file="Source/UI/Image/panel.png"/>
-          <FILE id="s3gaJ4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
-          <FILE id="VYBu0e" name="switchBtn2.png" compile="0" resource="1" file="Source/UI/Image/switchBtn2.png"/>
+  <MAINGROUP id="ZLyVo3" name="Demo">
+    <GROUP id="{3A4810AD-3114-AA9D-F6F9-81957D70F025}" name="Source">
+      <GROUP id="{D12DD16B-1F62-71B8-9D61-87E68463F0D5}" name="UI">
+        <GROUP id="{31B9C62C-F92E-E941-6265-171F83BFA3B3}" name="Image">
+          <FILE id="dj3Bwm" name="btn1.png" compile="0" resource="1" file="Source/UI/Image/btn1.png"/>
+          <FILE id="rb2Kog" name="btn2.png" compile="0" resource="1" file="Source/UI/Image/btn2.png"/>
+          <FILE id="gIVaxX" name="btn3.png" compile="0" resource="1" file="Source/UI/Image/btn3.png"/>
+          <FILE id="dFH2XV" name="btn4.png" compile="0" resource="1" file="Source/UI/Image/btn4.png"/>
+          <FILE id="poP9hF" name="bulbGrid.png" compile="0" resource="1" file="Source/UI/Image/bulbGrid.png"/>
+          <FILE id="Zv9aNt" name="grillGrid.png" compile="0" resource="1" file="Source/UI/Image/grillGrid.png"/>
+          <FILE id="OSkAr6" name="knob.png" compile="0" resource="1" file="Source/UI/Image/knob.png"/>
+          <FILE id="i56Pqy" name="option1.png" compile="0" resource="1" file="Source/UI/Image/option1.png"/>
+          <FILE id="zxiy4Q" name="option2.png" compile="0" resource="1" file="Source/UI/Image/option2.png"/>
+          <FILE id="YFXvv9" name="option3.png" compile="0" resource="1" file="Source/UI/Image/option3.png"/>
+          <FILE id="el910D" name="option4.png" compile="0" resource="1" file="Source/UI/Image/option4.png"/>
+          <FILE id="lFbEQE" name="panel.png" compile="0" resource="1" file="Source/UI/Image/panel.png"/>
+          <FILE id="cmuFR4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
+          <FILE id="LUQsGX" name="switchBtn2.png" compile="0" resource="1" file="Source/UI/Image/switchBtn2.png"/>
         </GROUP>
+        <FILE id="Xh8kDq" name="ButtonLook.cpp" compile="1" resource="0" file="Source/UI/ButtonLook.cpp"/>
+        <FILE id="jjNe6b" name="ButtonLook.h" compile="0" resource="0" file="Source/UI/ButtonLook.h"/>
+        <FILE id="zHys3P" name="LevelMeterComponent.cpp" compile="1" resource="0"
+              file="Source/UI/LevelMeterComponent.cpp"/>
+        <FILE id="eB4wCv" name="LevelMeterComponent.h" compile="0" resource="0"
+              file="Source/UI/LevelMeterComponent.h"/>
+        <FILE id="JZ6IAA" name="SliderLook.cpp" compile="1" resource="0" file="Source/UI/SliderLook.cpp"/>
+        <FILE id="QWT9Zz" name="SliderLook.h" compile="0" resource="0" file="Source/UI/SliderLook.h"/>
+        <FILE id="kZXKy6" name="WaveformComponent.cpp" compile="1" resource="0"
+              file="Source/UI/WaveformComponent.cpp"/>
+        <FILE id="FlfbjF" name="WaveformComponent.h" compile="0" resource="0"
+              file="Source/UI/WaveformComponent.h"/>
       </GROUP>
-      <FILE id="qi06cr" name="PluginProcessor.cpp" compile="1" resource="0"
+      <FILE id="wiS3gS" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="mi2NU9" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="X4aNcS" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="TQQ5UZ" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="Tu2hj1" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="tM94aM" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="qiusI4" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

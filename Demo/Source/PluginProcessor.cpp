@@ -13,12 +13,12 @@ using namespace juce;
 DemoAudioProcessor::DemoAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
-        #if ! JucePlugin_IsMidiEffect
-            #if ! JucePlugin_IsSynth
-                .withInput("Input", AudioChannelSet::stereo(), true)
-            #endif
-                .withOutput("Output", AudioChannelSet::stereo(), true)
-        #endif
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+        .withInput("Input", AudioChannelSet::stereo(), true)
+#endif
+        .withOutput("Output", AudioChannelSet::stereo(), true)
+#endif
     ), waveViewer(2),
 #endif
     parameters(*this, nullptr, Identifier("APVT"),
@@ -50,9 +50,6 @@ DemoAudioProcessor::DemoAudioProcessor()
     // gains
     previousOutputGain = *outputGainParameter;
     previousInputGain = *inputGainParameter;
-
-    // characteristic function
-    distortion.functionToUse = [](float x) { return tanh(x); };
 
     // waveform
     waveViewer.setRepaintRate(30);
@@ -86,34 +83,6 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     spec.maximumBlockSize = numSamples;
     spec.numChannels = numInputChannels;
 
-    std::cout << " > Filter Size: " << coeff.size() << std::endl;
-
-    // -- Method 1 - Use Convolution -- //
-//    coeffBuffer = AudioBuffer<float>(1, (int) coeff.size());     /* Initialize the buffer */
-//    coeffBuffer.copyFrom(0, 0, coeff.data(), (int) coeff.size()); /* Vector to buffer */
-//    // coeffBuffer.reverse(0, 0, convInSize); /* Call this line when load params from pytorch */
-//
-//    myfilter.reset(); /* Resets the processing pipeline ready to start a new stream of data */
-//    myfilter.loadImpulseResponse( /* Load coeff as IR */
-//               std::move (coeffBuffer),
-//               spec.sampleRate,
-//               dsp::Convolution::Stereo::yes,
-//               dsp::Convolution::Trim::no,
-//               dsp::Convolution::Normalise::no);
-//     myfilter.prepare(spec); /* Must be called before first calling process */
-
-
-    // -- Method 2 - Use FIR -- //
-    //dsp::FIR::Coefficients<float>::Ptr coeffPtr = new dsp::FIR::Coefficients<float>(
-    //    coeff.getRawDataPointer(), coeff.size());
-    //myfilter.reset(); /* Resets the processing pipeline ready to start a new stream of data */
-    //myfilter.state = *coeffPtr;
-    //myfilter.prepare(spec); /* Must be called before first calling process */
-
-    // spectrum curve
-    leftChannelFifo.prepare(numSamples);
-    rightChannelFifo.prepare(numSamples);
-
     // waveform viewer
     waveViewer.clear();
 
@@ -131,9 +100,6 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     // clear gain cache
     previousOutputGain = *outputGainParameter + 0.0;
     previousInputGain = *inputGainParameter + 0.0;
-
-    // characteristic function
-    distortion.prepare(spec);
 
     // clear bufferTimeRecords
     memset(bufferTimeRecords, 0, sizeof(bufferTimeRecords));
@@ -185,14 +151,7 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         //dsp::ProcessContextReplacing<float> context(block);
         //myfilter.process(context);
 
-        // characteristic function
-        distortion.process(dsp::ProcessContextReplacing<float>(block));
-
         ApplyOutputGain(buffer);
-
-        // spectrum Curve
-        leftChannelFifo.update(buffer);
-        rightChannelFifo.update(buffer);
 
         // waveform viewer
         waveViewer.pushBuffer(buffer);
@@ -295,66 +254,6 @@ void DemoAudioProcessor::ApplyOutputGain(AudioBuffer<float>& buffer)
         auto numSamples = buffer.getNumSamples();
         buffer.applyGainRamp(0, numSamples, previousOutputGain, currentOutputGain);
         previousOutputGain = currentOutputGain;
-    }
-}
-
-
-/*
-================================================================================
-Characteristic function
-================================================================================
-*/
-
-int DemoAudioProcessor::getDistortionType()
-{
-    return distortionType;
-}
-
-void DemoAudioProcessor::setDistortionType(int type)
-{
-    distortionType = type;
-}
-
-void DemoAudioProcessor::updateDistortionType()
-{
-    //switch (distortionType)
-    //{
-    //case 0: // None
-    //    distortion.functionToUse = [](float x) { return x; };
-    //    break;
-    //case 1: // Soft clipping
-    //    distortion.functionToUse = [](float x) { return jlimit<float>(-0.8f, 0.8f, x); };
-    //    break;
-    //case 2: // Hard clipping
-    //    distortion.functionToUse = [](float x) { return jlimit<float>(-0.3f, 0.3f, x); };
-    //    break;
-    //case 3: // Arctangent nonlinearity
-    //    distortion.functionToUse = [](float x) { return (2.0f / MathConstants<float>::pi) * atan(x * 10); };
-    //    break;
-    //case 4: // tanh
-    //    distortion.functionToUse = [](float x) { return tanh(x); };
-    //    break;
-    //default:
-    //    jassertfalse;
-    //    break;
-    //}
-    switch (distortionType)
-    {
-    case 0: // Tanh
-        distortion.functionToUse = [](float x) { return tanh(x); };
-        break;
-    case 1: // Arctanh
-        distortion.functionToUse = [](float x) { return (2.0f / MathConstants<float>::pi) * atan(x * 10); };
-        break;
-    case 2: // Soft clipping
-        distortion.functionToUse = [](float x) { return jlimit<float>(-0.8f, 0.8f, x); };
-        break;
-    case 3: // Hard clipping
-        distortion.functionToUse = [](float x) { return jlimit<float>(-0.3f, 0.3f, x); };
-        break;
-    default:
-        jassertfalse;
-        break;
     }
 }
 

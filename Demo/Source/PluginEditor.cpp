@@ -11,14 +11,10 @@
 //==============================================================================
 DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor(&p), processor(p), valueTreeState(vts),
-    spectrumComponent(processor), levelMeter(processor), characteristicFunctionComponent(processor), waveformComponent(processor)
+    levelMeter(processor), waveformComponent(processor)
 {
-    // SpectrumComponent
-    addAndMakeVisible(spectrumComponent);
-
     // Waveform
     addAndMakeVisible(waveformComponent);
-    waveformComponent.setVisible(false);
 
     // LevelMeterComponent
     addAndMakeVisible(levelMeter);
@@ -33,7 +29,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
         valueTreeState, "Input Gain", inputGainSlider));
 
     addAndMakeVisible(inputGainLabel);
-    inputGainLabel.setText("Gain", dontSendNotification);
+    inputGainLabel.setText("Input Gain", dontSendNotification);
     inputGainLabel.setFont(Font(16.0f, Font::bold));
     inputGainLabel.setColour(Label::textColourId, Colour(180, 136, 245));
     inputGainLabel.setJustificationType(Justification::centred);
@@ -48,7 +44,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
         valueTreeState, "Output Gain", outputGainSlider));
 
     addAndMakeVisible(outputGainLabel);
-    outputGainLabel.setText("Level", dontSendNotification);
+    outputGainLabel.setText("Output Gain", dontSendNotification);
     outputGainLabel.setFont(Font(16.0f, Font::bold));
     outputGainLabel.setColour(Label::textColourId, Colour(157, 249, 241));
     outputGainLabel.setJustificationType(Justification::centred);
@@ -57,16 +53,10 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     addAndMakeVisible(bufferTimeLabel);
     bufferTimeLabel.setText("Buffer Time: ", dontSendNotification);
 
-    // appearence
-    panelBg = ImageCache::getFromMemory(BinaryData::panel_png, BinaryData::panel_pngSize);
-
-    // characteristicFunctionComponent
-    addAndMakeVisible(characteristicFunctionComponent);
-
     // switch button (switch between spectrum and waveform)
     addAndMakeVisible(switchBtn);
     switchBtn.addListener(this);
-    switchBtn.setLookAndFeel(&buttonLook2);
+    switchBtn.setLookAndFeel(&buttonLook);
 
     setSize(550, 360);
     startTimerHz(10);
@@ -92,57 +82,59 @@ void DemoAudioProcessorEditor::paint(Graphics& g)
 void DemoAudioProcessorEditor::resized()
 {
     background = Image(Image::PixelFormat::RGB, getWidth(), getHeight(), true);
+    auto bounds = getLocalBounds();
 
     Graphics g(background);
-    g.fillAll(Colour(58, 58, 58));
-    auto bounds = getLocalBounds();
-    auto panelArea = bounds.removeFromBottom(getHeight() * 0.45);
-    bounds.removeFromBottom(2);
-    g.setColour(Colours::black);
-    g.fillRoundedRectangle(panelArea.toFloat(), 10.f);
-    g.fillRoundedRectangle(bounds.toFloat(), 10.f);
+    g.fillAll(Colours::black);
 
-    bounds.removeFromTop(5);
-    bounds.removeFromBottom(10);
-    bounds.removeFromLeft(5);
-
-    // spectrum component
-    spectrumComponent.setBounds(bounds);
-    // waveform component
-    waveformComponent.setBounds(bounds);
-
-    // panel background color
-    int side = 7;
-    auto panel = Rectangle<int>(panelArea.getX() + side, panelArea.getY() + side, (panelArea.getWidth() * 0.8) - side, panelArea.getHeight() - (2 * side));
-    g.drawImageWithin(panelBg, panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight(), RectanglePlacement::stretchToFit);
-
-    // level meter
-    auto levelMeterArea = Rectangle<int>(panel.getRight() + 10, panelArea.getY() + 10, panelArea.getWidth() * 0.2 - 20, panelArea.getHeight() - 20);
-    levelMeter.setBounds(levelMeterArea);
-
-    // input gain
-    auto inputGainArea = Rectangle<int>(panel.getX() + 10, panel.getY() + 25, 80, 100);
-    auto inputGainLabelArea = inputGainArea.removeFromBottom(inputGainArea.getHeight() * 0.2);
-    inputGainLabel.setBounds(inputGainLabelArea);
-    inputGainSlider.setBounds(inputGainArea);
-
-    // output gain
-    auto outputGainArea = Rectangle<int>(inputGainArea.getRight() + 10, panel.getY() + 25, 80, 100);
-    auto outputGainLabelArea = outputGainArea.removeFromBottom(outputGainArea.getHeight() * 0.2);
-    outputGainLabel.setBounds(outputGainLabelArea);
-    outputGainSlider.setBounds(outputGainArea);
-
-    // characteristic function window
-    auto characteristicFunctionArea = Rectangle<int>(outputGainArea.getRight() + 20, panel.getY() + 10, panel.getRight() - outputGainArea.getRight() - 40, panel.getHeight() * 0.75);
-    characteristicFunctionComponent.setBounds(characteristicFunctionArea);
+    g.setColour(Colours::red);
 
     // switch button
-    auto switchBtnArea = Rectangle<int>(characteristicFunctionArea.getRight() - 20, characteristicFunctionArea.getY(), 20, 20);
-    switchBtn.setBounds(switchBtnArea);
+    auto switchBtnArea = bounds.removeFromTop(50);
+    auto renderArea = Rectangle<int>((switchBtnArea.getWidth() / 7) * 2, 10, (switchBtnArea.getWidth() / 7) * 3, 30);
+    g.drawRect(renderArea);
+    //switchBtn.setBounds(renderArea);
+
+    // waveform component
+    auto waveformArea = bounds.removeFromTop(bounds.getHeight() / 2);
+    renderArea = waveformArea.removeFromLeft(bounds.getWidth() / 5);
+    g.drawRect(waveformArea);
+    //waveformComponent.setBounds(waveformArea);
+
+    // import area
+    auto importArea = Rectangle<int>(10, renderArea.getY() + 10, renderArea.getWidth() - 20, renderArea.getHeight() - 20);
+    g.drawRect(importArea);
+
+    // vector scope
+    auto vectorScopeArea = bounds.removeFromRight(bounds.getWidth() / 2);
+    renderArea = Rectangle<int>(vectorScopeArea.getX() + 20, vectorScopeArea.getY() + 10, vectorScopeArea.getWidth() - 50, vectorScopeArea.getHeight() - 30);
+    g.drawRect(renderArea);
+
+    // input gain
+    auto inputGainArea = Rectangle<int>(40, bounds.getY() + 10, 30, 45);
+    auto inputGainLabelArea = inputGainArea.removeFromBottom(15);
+    //inputGainLabel.setBounds(inputGainLabelArea);
+    //inputGainSlider.setBounds(inputGainArea);
+    g.drawRect(inputGainLabelArea);
+    g.drawRect(inputGainArea);
+
+    // output gain
+    auto outputGainArea = Rectangle<int>(40, inputGainLabelArea.getBottom() + 5, 30, 45);
+    auto outputGainLabelArea = outputGainArea.removeFromBottom(15);
+    //outputGainLabel.setBounds(outputGainLabelArea);
+    //outputGainSlider.setBounds(outputGainArea);
+    g.drawRect(outputGainLabelArea);
+    g.drawRect(outputGainArea);
+
+    // level meter
+    auto levelMeterArea = Rectangle<int>(75, bounds.getY() + 10, 170, 95);
+    //levelMeter.setBounds(levelMeterArea);
+    g.drawRect(levelMeterArea);
 
     // --- RTF monitor --- //
-    auto RTFArea = Rectangle<int>(panel.getX() + panel.getWidth() / 2 + 10, panel.getBottom() - 30, 150, 30);
+    auto RTFArea = Rectangle<int>(40, outputGainLabelArea.getBottom() + 10, 150, 30);
     bufferTimeLabel.setBounds(RTFArea);
+    g.drawRect(RTFArea);
 }
 
 //==============================================================================
@@ -163,16 +155,14 @@ void DemoAudioProcessorEditor::buttonClicked(Button* button)
 {
     if (button == &switchBtn)
     {
-        if (buttonLook2.getStage() == 0)
+        if (buttonLook.getStage() == 0)
         {
-            buttonLook2.setStage(1);
-            spectrumComponent.setVisible(false);
+            buttonLook.setStage(1);
             waveformComponent.setVisible(true);
         }
         else
         {
-            buttonLook2.setStage(0);
-            spectrumComponent.setVisible(true);
+            buttonLook.setStage(0);
             waveformComponent.setVisible(false);
         }
     }

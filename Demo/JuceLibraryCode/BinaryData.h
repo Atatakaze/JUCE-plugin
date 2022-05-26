@@ -8,18 +8,6 @@
 
 namespace BinaryData
 {
-    extern const char*   option1_png;
-    const int            option1_pngSize = 7722;
-
-    extern const char*   option2_png;
-    const int            option2_pngSize = 7942;
-
-    extern const char*   option3_png;
-    const int            option3_pngSize = 6512;
-
-    extern const char*   option4_png;
-    const int            option4_pngSize = 7639;
-
     extern const char*   btn1_png;
     const int            btn1_pngSize = 9337;
 
@@ -40,6 +28,18 @@ namespace BinaryData
 
     extern const char*   knob_png;
     const int            knob_pngSize = 33707;
+
+    extern const char*   option1_png;
+    const int            option1_pngSize = 7722;
+
+    extern const char*   option2_png;
+    const int            option2_pngSize = 7942;
+
+    extern const char*   option3_png;
+    const int            option3_pngSize = 6512;
+
+    extern const char*   option4_png;
+    const int            option4_pngSize = 7639;
 
     extern const char*   panel_png;
     const int            panel_pngSize = 86122;
