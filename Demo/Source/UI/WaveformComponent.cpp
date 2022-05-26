@@ -30,7 +30,7 @@ void WaveformComponent::paint (Graphics& g)
 {
     // draw waveform responseArea boundaries
     g.setColour(Colour(127u, 148u, 171u));
-    g.drawRoundedRectangle(getResponseArea().toFloat(), 1.5f, 1.5f);
+    g.drawRoundedRectangle(getResponseArea().toFloat(), 5.0f, 2.0f);
 }
 
 //==============================================================================
@@ -43,10 +43,10 @@ void WaveformComponent::resized()
 Rectangle<int> WaveformComponent::getResponseArea()
 {
     auto bounds = getLocalBounds();
-    bounds.removeFromTop(20);
-    bounds.removeFromBottom(2);
-    bounds.removeFromLeft(20);
-    bounds.removeFromRight(20);
+    bounds.removeFromTop(5);
+    bounds.removeFromBottom(10);
+    bounds.removeFromLeft(10);
+    bounds.removeFromRight(10);
 
     return bounds;
 }
@@ -55,8 +55,8 @@ Rectangle<int> WaveformComponent::getResponseArea()
 Rectangle<int> WaveformComponent::getRenderArea()
 {
     auto bounds = getResponseArea();
-    bounds.removeFromTop(2);
-    bounds.removeFromBottom(2);
+    bounds.removeFromTop(3);
+    bounds.removeFromBottom(3);
     bounds.removeFromLeft(2);
     bounds.removeFromRight(2);
 
