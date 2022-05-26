@@ -28,11 +28,11 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     inputGainAttachment.reset(new SliderAttachment(
         valueTreeState, "Input Gain", inputGainSlider));
 
-    addAndMakeVisible(inputGainLabel);
-    inputGainLabel.setText("Input Gain", dontSendNotification);
-    inputGainLabel.setFont(Font(16.0f, Font::bold));
-    inputGainLabel.setColour(Label::textColourId, Colour(180, 136, 245));
-    inputGainLabel.setJustificationType(Justification::centred);
+    //addAndMakeVisible(inputGainLabel);
+    //inputGainLabel.setText("Input Gain", dontSendNotification);
+    //inputGainLabel.setFont(Font(10.0f, Font::bold));
+    //inputGainLabel.setColour(Label::textColourId, Colour(180, 136, 245));
+    //inputGainLabel.setJustificationType(Justification::centred);
 
     // output gain
     addAndMakeVisible(outputGainSlider);
@@ -43,11 +43,11 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     outputGainAttachment.reset(new SliderAttachment(
         valueTreeState, "Output Gain", outputGainSlider));
 
-    addAndMakeVisible(outputGainLabel);
-    outputGainLabel.setText("Output Gain", dontSendNotification);
-    outputGainLabel.setFont(Font(16.0f, Font::bold));
-    outputGainLabel.setColour(Label::textColourId, Colour(157, 249, 241));
-    outputGainLabel.setJustificationType(Justification::centred);
+    //addAndMakeVisible(outputGainLabel);
+    //outputGainLabel.setText("Output Gain", dontSendNotification);
+    //outputGainLabel.setFont(Font(10.0f, Font::bold));
+    //outputGainLabel.setColour(Label::textColourId, Colour(157, 249, 241));
+    //outputGainLabel.setJustificationType(Justification::centred);
 
     // monitoring
     addAndMakeVisible(bufferTimeLabel);
@@ -98,8 +98,7 @@ void DemoAudioProcessorEditor::resized()
     // waveform component
     auto waveformArea = bounds.removeFromTop(bounds.getHeight() / 2);
     renderArea = waveformArea.removeFromLeft(bounds.getWidth() / 5);
-    g.drawRect(waveformArea);
-    //waveformComponent.setBounds(waveformArea);
+    waveformComponent.setBounds(waveformArea);
 
     // import area
     auto importArea = Rectangle<int>(10, renderArea.getY() + 10, renderArea.getWidth() - 20, renderArea.getHeight() - 20);
@@ -111,28 +110,19 @@ void DemoAudioProcessorEditor::resized()
     g.drawRect(renderArea);
 
     // input gain
-    auto inputGainArea = Rectangle<int>(40, bounds.getY() + 10, 30, 45);
-    auto inputGainLabelArea = inputGainArea.removeFromBottom(15);
-    //inputGainLabel.setBounds(inputGainLabelArea);
-    //inputGainSlider.setBounds(inputGainArea);
-    g.drawRect(inputGainLabelArea);
-    g.drawRect(inputGainArea);
+    auto inputGainArea = Rectangle<int>(40, bounds.getY() + 15, 50, 50);
+    inputGainSlider.setBounds(inputGainArea);
 
     // output gain
-    auto outputGainArea = Rectangle<int>(40, inputGainLabelArea.getBottom() + 5, 30, 45);
-    auto outputGainLabelArea = outputGainArea.removeFromBottom(15);
-    //outputGainLabel.setBounds(outputGainLabelArea);
-    //outputGainSlider.setBounds(outputGainArea);
-    g.drawRect(outputGainLabelArea);
-    g.drawRect(outputGainArea);
+    auto outputGainArea = Rectangle<int>(40, inputGainArea.getBottom() + 4, 50, 50);
+    outputGainSlider.setBounds(outputGainArea);
 
     // level meter
-    auto levelMeterArea = Rectangle<int>(75, bounds.getY() + 10, 170, 95);
-    //levelMeter.setBounds(levelMeterArea);
-    g.drawRect(levelMeterArea);
+    auto levelMeterArea = Rectangle<int>(95, bounds.getY() + 10, 170, 104);
+    levelMeter.setBounds(levelMeterArea);
 
     // --- RTF monitor --- //
-    auto RTFArea = Rectangle<int>(40, outputGainLabelArea.getBottom() + 10, 150, 30);
+    auto RTFArea = Rectangle<int>(40, outputGainArea.getBottom() + 2, 150, 30);
     bufferTimeLabel.setBounds(RTFArea);
 }
 

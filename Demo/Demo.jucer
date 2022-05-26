@@ -7,7 +7,6 @@
     <GROUP id="{3A4810AD-3114-AA9D-F6F9-81957D70F025}" name="Source">
       <GROUP id="{D12DD16B-1F62-71B8-9D61-87E68463F0D5}" name="UI">
         <GROUP id="{31B9C62C-F92E-E941-6265-171F83BFA3B3}" name="Image">
-          <FILE id="poP9hF" name="bulbGrid.png" compile="0" resource="1" file="Source/UI/Image/bulbGrid.png"/>
           <FILE id="Zv9aNt" name="grillGrid.png" compile="0" resource="1" file="Source/UI/Image/grillGrid.png"/>
           <FILE id="OSkAr6" name="knob.png" compile="0" resource="1" file="Source/UI/Image/knob.png"/>
           <FILE id="cmuFR4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
