@@ -57,14 +57,14 @@ void SliderLook::drawRotarySlider(
     // pointer
     Path p;
     auto pointerRadius = 7;
-    p.addEllipse(-3, -19, pointerRadius, pointerRadius);
+    p.addEllipse(-3, -13, pointerRadius, pointerRadius);
     p.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY));
     g.setColour(Colours::black);
     g.fillPath(p);
 
     p.clear();
     pointerRadius = 5;
-    p.addEllipse(-2, -18, pointerRadius, pointerRadius);
+    p.addEllipse(-2, -12, pointerRadius, pointerRadius);
     p.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY));
     g.setColour(frontColour);
     g.fillPath(p);
