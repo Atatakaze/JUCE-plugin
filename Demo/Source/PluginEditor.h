@@ -43,11 +43,11 @@ private:
     // envs
     double hostSampleRate = 48000.;
 
-    // input gain
+    // -- input gain -- //
     Slider inputGainSlider;
     Label inputGainLabel;
 
-    // output gain
+    // -- output gain -- //
     Slider outputGainSlider;
     Label outputGainLabel;
 
@@ -58,17 +58,20 @@ private:
     std::unique_ptr<SliderAttachment> inputGainAttachment;
     std::unique_ptr<SliderAttachment> outputGainAttachment;
 
-    // waveform component
+    // -- waveform component -- //
     WaveformComponent waveformComponent;
 
-    // level meter for right and left channel
+    // -- level meter -- //
     LevelMeterComponent levelMeter;
 
-    // mode component
+    // -- mode component -- //
     ModeComponent modeComponent;
 
+    // -- import components -- //
+    Slider importSlider;
+
     // appearence
-    SliderLook slider1, slider2;
+    SliderLook slider1, slider2, slider3;
     Image panelBg, vectorScopeBg;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessorEditor)

@@ -56,6 +56,13 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     // mode component (switch between regular mode and HRTF mode)
     addAndMakeVisible(modeComponent);
 
+    // import components
+    addAndMakeVisible(importSlider);
+    importSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    importSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    slider3.setSliderColour(Colour(255, 192, 0), Colour(190, 159, 102));
+    importSlider.setLookAndFeel(&slider3);
+
     // appearence
     panelBg = ImageCache::getFromMemory(BinaryData::panel_png, BinaryData::panel_pngSize);
     vectorScopeBg = ImageCache::getFromMemory(BinaryData::vectorScope_png, BinaryData::vectorScope_pngSize);
@@ -69,6 +76,7 @@ DemoAudioProcessorEditor::~DemoAudioProcessorEditor()
 {
     inputGainSlider.setLookAndFeel(nullptr);
     outputGainSlider.setLookAndFeel(nullptr);
+    importSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -116,9 +124,10 @@ void DemoAudioProcessorEditor::resized()
     outputGainSlider.setBounds(outputGainArea);
     outputGainLabel.setBounds(outputGainLabelArea);
 
-    // import area
+    // import components
     auto importArea = Rectangle<int>(panel.getX() + 2, panel.getY() + panel.getHeight() / 2 + 15, panel.getWidth() - 4, 50);
-    g.drawRect(importArea);
+    auto importSliderArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, 45, 45);
+    importSlider.setBounds(importSliderArea);
 
     // mode component
     auto modeComponentArea = Rectangle<int>(panel.getX() + 4, panel.getY() + panel.getHeight() / 2 + 70, panel.getWidth() - 8, 35);
