@@ -15,10 +15,10 @@ namespace BinaryData
     const int            knob_pngSize = 33707;
 
     extern const char*   switchBtn_png;
-    const int            switchBtn_pngSize = 3357;
+    const int            switchBtn_pngSize = 12099;
 
     extern const char*   switchBtn2_png;
-    const int            switchBtn2_pngSize = 3223;
+    const int            switchBtn2_pngSize = 6119;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 4;
