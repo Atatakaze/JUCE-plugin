@@ -213,6 +213,23 @@ float DemoAudioProcessor::getRmsValue(const int channel, const int io) const
 
 /*
 ================================================================================
+mode component: regular or HRTF
+================================================================================
+*/
+
+int DemoAudioProcessor::getMode()
+{
+    return mode;
+}
+
+void DemoAudioProcessor::setMode(int type)
+{
+    mode = type;
+}
+
+
+/*
+================================================================================
 State Block
 ================================================================================
 */

@@ -11,7 +11,7 @@
 //==============================================================================
 DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor(&p), processor(p), valueTreeState(vts),
-    levelMeter(processor), waveformComponent(processor)
+    levelMeter(processor), waveformComponent(processor), modeComponent(processor)
 {
     // Waveform
     addAndMakeVisible(waveformComponent);
@@ -53,10 +53,8 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     addAndMakeVisible(bufferTimeLabel);
     bufferTimeLabel.setText("Buffer Time: ", dontSendNotification);
 
-    // switch button (switch between spectrum and waveform)
-    addAndMakeVisible(switchBtn);
-    switchBtn.addListener(this);
-    switchBtn.setLookAndFeel(&buttonLook);
+    // mode component (switch between regular mode and HRTF mode)
+    addAndMakeVisible(modeComponent);
 
     setSize(550, 360);
     startTimerHz(10);
@@ -67,8 +65,6 @@ DemoAudioProcessorEditor::~DemoAudioProcessorEditor()
 {
     inputGainSlider.setLookAndFeel(nullptr);
     outputGainSlider.setLookAndFeel(nullptr);
-    switchBtn.removeListener(this);
-    switchBtn.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -89,11 +85,10 @@ void DemoAudioProcessorEditor::resized()
 
     g.setColour(Colours::red);
 
-    // switch button
-    auto switchBtnArea = bounds.removeFromTop(50);
-    auto renderArea = Rectangle<int>((switchBtnArea.getWidth() / 7) * 2, 10, (switchBtnArea.getWidth() / 7) * 3, 30);
-    g.drawRect(renderArea);
-    //switchBtn.setBounds(renderArea);
+    // mode component
+    auto modeComponentArea = bounds.removeFromTop(50);
+    auto renderArea = Rectangle<int>((modeComponentArea.getWidth() / 7) * 2, 15, (modeComponentArea.getWidth() / 7) * 3, 30);
+    modeComponent.setBounds(renderArea);
 
     // waveform component
     auto waveformArea = bounds.removeFromTop(bounds.getHeight() / 2);
@@ -137,22 +132,4 @@ void DemoAudioProcessorEditor::timerCallback()
     }
     ave /= 100;
     bufferTimeLabel.setText("Buffer Time: " + std::to_string(ave), dontSendNotification);
-}
-
-//==============================================================================
-void DemoAudioProcessorEditor::buttonClicked(Button* button)
-{
-    if (button == &switchBtn)
-    {
-        if (buttonLook.getStage() == 0)
-        {
-            buttonLook.setStage(1);
-            waveformComponent.setVisible(true);
-        }
-        else
-        {
-            buttonLook.setStage(0);
-            waveformComponent.setVisible(false);
-        }
-    }
 }

@@ -43,9 +43,9 @@ void ButtonLook::drawButtonBackground(Graphics& g, Button& button, const Colour&
 }
 
 //==============================================================================
-void ButtonLook::setStage(int n)
+void ButtonLook::setStage(int state)
 {
-    stage = n;
+    stage = state;
 }
 
 //==============================================================================

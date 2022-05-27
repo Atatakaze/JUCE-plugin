@@ -18,6 +18,9 @@
               file="Source/UI/LevelMeterComponent.cpp"/>
         <FILE id="eB4wCv" name="LevelMeterComponent.h" compile="0" resource="0"
               file="Source/UI/LevelMeterComponent.h"/>
+        <FILE id="ytJiSI" name="modeComponent.cpp" compile="1" resource="0"
+              file="Source/UI/modeComponent.cpp"/>
+        <FILE id="glCSDr" name="modeComponent.h" compile="0" resource="0" file="Source/UI/modeComponent.h"/>
         <FILE id="JZ6IAA" name="SliderLook.cpp" compile="1" resource="0" file="Source/UI/SliderLook.cpp"/>
         <FILE id="QWT9Zz" name="SliderLook.h" compile="0" resource="0" file="Source/UI/SliderLook.h"/>
         <FILE id="kZXKy6" name="WaveformComponent.cpp" compile="1" resource="0"

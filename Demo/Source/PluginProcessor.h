@@ -76,6 +76,11 @@ public:
     // levelmeter
     float getRmsValue(const int, const int) const;
 
+    //==============================================================================
+    // mode component: regular or HRTF
+    int getMode();
+    void setMode(int type);
+
 private:
     //==============================================================================
     AudioProcessorValueTreeState parameters;
@@ -96,6 +101,9 @@ private:
 
     // level meter
     LinearSmoothedValue<float> inputLevelLeft, inputLevelRight, outputLevelLeft, outputLevelRight;
+
+    // mode component: mode==1 (regular), mode==2 (HRTF)
+    int mode = 1;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessor)
 };

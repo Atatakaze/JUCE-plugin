@@ -7,7 +7,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "UI/SliderLook.h"
-#include "UI/ButtonLook.h"
+#include "UI/ModeComponent.h"
 #include "UI/WaveformComponent.h"
 #include "UI/LevelMeterComponent.h"
 
@@ -23,7 +23,7 @@ AudioProcessorEditor
 
 typedef AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
-class DemoAudioProcessorEditor : public AudioProcessorEditor, public Timer, public Button::Listener
+class DemoAudioProcessorEditor : public AudioProcessorEditor, public Timer
 {
 public:
     DemoAudioProcessorEditor(DemoAudioProcessor&, AudioProcessorValueTreeState& vts);
@@ -33,7 +33,6 @@ public:
     void paint(Graphics&) override;
     void resized() override;
     void timerCallback() override;
-    void buttonClicked(Button* button) override;
 
 private:
     DemoAudioProcessor& processor;
@@ -65,10 +64,11 @@ private:
     // level meter for right and left channel
     LevelMeterComponent levelMeter;
 
+    // mode component
+    ModeComponent modeComponent;
+
     // appearence
     SliderLook slider1, slider2;
-    ButtonLook buttonLook;
-    TextButton switchBtn{ " " };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessorEditor)
 };
