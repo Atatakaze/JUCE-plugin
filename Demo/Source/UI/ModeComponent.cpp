@@ -23,12 +23,12 @@ ModeComponent::ModeComponent(DemoAudioProcessor& p) : processor(p)
 
     addAndMakeVisible(mode1Label);
     mode1Label.setText("Regular\n(mono/stereo)", dontSendNotification);
-    mode1Label.setFont(Font(10.0f));
+    mode1Label.setFont(Font(13.0f));
     mode1Label.setJustificationType(Justification::centred);
 
     addAndMakeVisible(mode2Label);
     mode2Label.setText("HRTF\n(mono2stereo) ", dontSendNotification);
-    mode2Label.setFont(Font(10.0f));
+    mode2Label.setFont(Font(13.0f));
     mode2Label.setJustificationType(Justification::centred);
     
     // toggle button 1
@@ -67,16 +67,16 @@ void ModeComponent::resized()
     modeLabel.setBounds(modeLabelArea);
 
     auto mode1Area = bounds.removeFromLeft(bounds.getWidth() / 2);
-    auto btn1Area = mode1Area.removeFromLeft(10);
-    btn1Area.removeFromTop(10);
-    btn1Area.removeFromBottom(10);
+    auto btn1Area = mode1Area.removeFromLeft(14);
+    btn1Area.removeFromTop(8);
+    btn1Area.removeFromBottom(8);
     mode1.setBounds(btn1Area);
     mode1Label.setBounds(mode1Area);
     
     auto mode2Area = bounds;
-    auto btn2Area = mode2Area.removeFromLeft(10);
-    btn2Area.removeFromTop(10);
-    btn2Area.removeFromBottom(10);
+    auto btn2Area = mode2Area.removeFromLeft(14);
+    btn2Area.removeFromTop(8);
+    btn2Area.removeFromBottom(8);
     mode2.setBounds(btn2Area);
     mode2Label.setBounds(mode2Area);
 }

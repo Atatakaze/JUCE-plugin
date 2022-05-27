@@ -87,7 +87,7 @@ void DemoAudioProcessorEditor::resized()
 
     // mode component
     auto modeComponentArea = bounds.removeFromTop(50);
-    auto renderArea = Rectangle<int>((modeComponentArea.getWidth() / 7) * 2, 15, (modeComponentArea.getWidth() / 7) * 3, 30);
+    auto renderArea = Rectangle<int>((modeComponentArea.getWidth() / 8) * 2, 15, (modeComponentArea.getWidth() / 8) * 4, 30);
     modeComponent.setBounds(renderArea);
 
     // waveform component
