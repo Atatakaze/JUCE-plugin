@@ -41,7 +41,7 @@ private:
     // option1 -> regular, option2 -> HRTF
     TextButton mode1{ " " }, mode2{ " " };
 
-    Label modeLabel, mode1Label, mode2Label;
+    Label mode1Label, mode2Label;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModeComponent)
