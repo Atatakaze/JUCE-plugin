@@ -30,8 +30,8 @@ public:
     void paint (Graphics&) override;
     void resized() override;
 
-    Rectangle<int> getResponseArea();
     Rectangle<int> getRenderArea();
+    Rectangle<int> getResponseArea();
 private:
     DemoAudioProcessor& processor;
 
