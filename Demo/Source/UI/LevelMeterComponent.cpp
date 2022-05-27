@@ -41,14 +41,14 @@ void LevelMeterComponent::paint(Graphics& g)
 
     // level meter for input left/right channel
     g.setGradientFill(gradient);
-    const auto scaleX_IL = jmap(levelIL, -48.f, 0.f, static_cast<float>(boundsRrenderArea[0].getX()), static_cast<float>(boundsRrenderArea[0].getWidth()));
-    g.fillRect(boundsRrenderArea[0].removeFromLeft(scaleX_IL));
-    const auto scaleX_IR = jmap(levelIR, -48.f, 0.f, static_cast<float>(boundsRrenderArea[1].getX()), static_cast<float>(boundsRrenderArea[1].getWidth()));
-    g.fillRect(boundsRrenderArea[1].removeFromLeft(scaleX_IR));
-    const auto scaleX_OL = jmap(levelOL, -48.f, 0.f, static_cast<float>(boundsRrenderArea[2].getX()), static_cast<float>(boundsRrenderArea[2].getWidth()));
-    g.fillRect(boundsRrenderArea[2].removeFromLeft(scaleX_OL));
-    const auto scaleX_OR = jmap(levelOR, -48.f, 0.f, static_cast<float>(boundsRrenderArea[3].getX()), static_cast<float>(boundsRrenderArea[3].getWidth()));
-    g.fillRect(boundsRrenderArea[3].removeFromLeft(scaleX_OR));
+    const auto scaleY_IL = jmap(levelIL, -48.f, 0.f, static_cast<float>(boundsRrenderArea[0].getY()), static_cast<float>(boundsRrenderArea[0].getBottom()));
+    g.fillRect(boundsRrenderArea[0].removeFromBottom(scaleY_IL));
+    const auto scaleY_IR = jmap(levelIR, -48.f, 0.f, static_cast<float>(boundsRrenderArea[1].getY()), static_cast<float>(boundsRrenderArea[1].getBottom()));
+    g.fillRect(boundsRrenderArea[1].removeFromBottom(scaleY_IR));
+    const auto scaleY_OL = jmap(levelOL, -48.f, 0.f, static_cast<float>(boundsRrenderArea[2].getY()), static_cast<float>(boundsRrenderArea[2].getBottom()));
+    g.fillRect(boundsRrenderArea[2].removeFromBottom(scaleY_OL));
+    const auto scaleY_OR = jmap(levelOR, -48.f, 0.f, static_cast<float>(boundsRrenderArea[3].getY()), static_cast<float>(boundsRrenderArea[3].getBottom()));
+    g.fillRect(boundsRrenderArea[3].removeFromBottom(scaleY_OR));
 
     // draw level meter grids
     boundsRrenderArea = getRenderArea(bounds);
@@ -84,10 +84,10 @@ void LevelMeterComponent::resized()
     auto bounds = getLocalBounds().toFloat();
 
     gradient = ColourGradient{
-        Colours::green,
-        bounds.getTopLeft(),
         Colours::red,
-        bounds.getTopRight(),
+        bounds.getTopLeft(),
+        Colours::green,
+        bounds.getBottomLeft(),
         false };
     gradient.addColour(0.5, Colours::yellow);
 }
@@ -117,8 +117,11 @@ void LevelMeterComponent::setLevel(const float inputLeftValue, const float input
 Rectangle<float>* LevelMeterComponent::getRenderArea(Rectangle<int> bounds)
 {
     // render area for each channel level meters
-    bounds = bounds.removeFromLeft(160);
-    auto inputArea = bounds.removeFromTop(bounds.getHeight() / 2);
+    bounds.removeFromTop(2);
+    bounds.removeFromBottom(2);
+    bounds.removeFromLeft(3);
+    bounds.removeFromRight(4);
+    auto inputArea = bounds.removeFromLeft(bounds.getWidth() / 2);
     auto outputArea = bounds;
 
     // input-left channel level meter      -> reanderArea[0]
@@ -127,13 +130,11 @@ Rectangle<float>* LevelMeterComponent::getRenderArea(Rectangle<int> bounds)
     // output-right channel level meter    -> reanderArea[3]
     Rectangle<float> renderArea[4];
 
-    inputArea.removeFromTop(12);
-    renderArea[0] = inputArea.removeFromTop(15).toFloat();
-    renderArea[1] = inputArea.removeFromTop(15).toFloat();
+    renderArea[0] = inputArea.removeFromLeft(8).toFloat();
+    renderArea[1] = inputArea.removeFromLeft(8).toFloat();
 
-    outputArea.removeFromTop(14);
-    renderArea[2]= outputArea.removeFromTop(15).toFloat();
-    renderArea[3] = outputArea.removeFromTop(15).toFloat();
+    renderArea[2] = outputArea.removeFromRight(8).toFloat();
+    renderArea[3] = outputArea.removeFromRight(8).toFloat();
 
     return renderArea;
 }
