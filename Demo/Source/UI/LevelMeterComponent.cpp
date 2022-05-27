@@ -129,12 +129,10 @@ Rectangle<float>* LevelMeterComponent::getRenderArea(Rectangle<int> bounds)
 
     inputArea.removeFromTop(12);
     renderArea[0] = inputArea.removeFromTop(15).toFloat();
-    //inputArea.removeFromTop(2);
     renderArea[1] = inputArea.removeFromTop(15).toFloat();
 
     outputArea.removeFromTop(14);
     renderArea[2]= outputArea.removeFromTop(15).toFloat();
-    //outputArea.removeFromTop(2);
     renderArea[3] = outputArea.removeFromTop(15).toFloat();
 
     return renderArea;
