@@ -58,6 +58,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
 
     // appearence
     panelBg = ImageCache::getFromMemory(BinaryData::panel_png, BinaryData::panel_pngSize);
+    vectorScopeBg = ImageCache::getFromMemory(BinaryData::vectorScope_png, BinaryData::vectorScope_pngSize);
 
     setSize(610, 360);
     startTimerHz(10);
@@ -138,7 +139,7 @@ void DemoAudioProcessorEditor::resized()
 
     // vector scope
     auto vectorScopeArea = bounds;
-    g.drawRect(vectorScopeArea);
+    g.drawImageWithin(vectorScopeBg, bounds.getX() + 20, bounds.getY(), bounds.getWidth() - 40, bounds.getHeight(), RectanglePlacement::fillDestination);
 }
 
 //==============================================================================

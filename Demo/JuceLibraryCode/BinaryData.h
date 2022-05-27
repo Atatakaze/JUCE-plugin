@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   vectorScope_png;
+    const int            vectorScope_pngSize = 45794;
+
     extern const char*   panel_png;
     const int            panel_pngSize = 15591;
 
@@ -24,7 +27,7 @@ namespace BinaryData
     const int            switchBtn2_pngSize = 6119;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 5;
+    const int namedResourceListSize = 6;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -69,7 +69,7 @@ private:
 
     // appearence
     SliderLook slider1, slider2;
-    Image panelBg;
+    Image panelBg, vectorScopeBg;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessorEditor)
 };
