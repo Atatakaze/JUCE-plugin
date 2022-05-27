@@ -10,6 +10,7 @@
 #include "UI/ModeComponent.h"
 #include "UI/WaveformComponent.h"
 #include "UI/LevelMeterComponent.h"
+#include "UI/ImportComponent.h"
 
 #include <string>
 
@@ -69,6 +70,7 @@ private:
 
     // -- import components -- //
     Slider importSlider;
+    ImportComponent importComponent;
 
     // appearence
     SliderLook slider1, slider2, slider3;

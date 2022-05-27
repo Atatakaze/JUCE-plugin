@@ -16,6 +16,10 @@
         </GROUP>
         <FILE id="Xh8kDq" name="ButtonLook.cpp" compile="1" resource="0" file="Source/UI/ButtonLook.cpp"/>
         <FILE id="jjNe6b" name="ButtonLook.h" compile="0" resource="0" file="Source/UI/ButtonLook.h"/>
+        <FILE id="fYwQ0K" name="ImportComponent.cpp" compile="1" resource="0"
+              file="Source/UI/ImportComponent.cpp"/>
+        <FILE id="jz8jcO" name="ImportComponent.h" compile="0" resource="0"
+              file="Source/UI/ImportComponent.h"/>
         <FILE id="zHys3P" name="LevelMeterComponent.cpp" compile="1" resource="0"
               file="Source/UI/LevelMeterComponent.cpp"/>
         <FILE id="eB4wCv" name="LevelMeterComponent.h" compile="0" resource="0"

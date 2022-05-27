@@ -63,6 +63,8 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     slider3.setSliderColour(Colour(255, 192, 0), Colour(190, 159, 102));
     importSlider.setLookAndFeel(&slider3);
 
+    addAndMakeVisible(importComponent);
+
     // appearence
     panelBg = ImageCache::getFromMemory(BinaryData::panel_png, BinaryData::panel_pngSize);
     vectorScopeBg = ImageCache::getFromMemory(BinaryData::vectorScope_png, BinaryData::vectorScope_pngSize);
@@ -128,6 +130,9 @@ void DemoAudioProcessorEditor::resized()
     auto importArea = Rectangle<int>(panel.getX() + 2, panel.getY() + panel.getHeight() / 2 + 15, panel.getWidth() - 4, 50);
     auto importSliderArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, 45, 45);
     importSlider.setBounds(importSliderArea);
+
+    auto importComponentArea = Rectangle<int>(importArea.getX(), importArea.getY(), importArea.getWidth() / 2, 50);
+    importComponent.setBounds(importComponentArea);
 
     // mode component
     auto modeComponentArea = Rectangle<int>(panel.getX() + 4, panel.getY() + panel.getHeight() / 2 + 70, panel.getWidth() - 8, 35);
