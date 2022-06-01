@@ -222,6 +222,11 @@ public:
     //==============================================================================
     // levelmeter
     float getRmsValue(const int, const int) const;
+    void DemoAudioProcessor::levelMeterUpdate(
+        LinearSmoothedValue<float>& levelMeterLeft,
+        LinearSmoothedValue<float>& levelMeterRight,
+        AudioBuffer<float>& buffer,
+        int numSamples);
 
     //==============================================================================
     // characteristic function component

@@ -161,23 +161,7 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         // ===== Start Coding ===== //
 
         // intput level meter - smooth
-        inputLevelLeft.skip(numSamples);
-        inputLevelRight.skip(numSamples);
-        {
-            const auto value = Decibels::gainToDecibels(buffer.getRMSLevel(0, 0, numSamples));
-            if (value < inputLevelLeft.getCurrentValue())
-                inputLevelLeft.setTargetValue(value);
-            else
-                inputLevelLeft.setCurrentAndTargetValue(value);
-        }
-
-        {
-            const auto value = Decibels::gainToDecibels(buffer.getRMSLevel(1, 0, numSamples));
-            if (value < inputLevelRight.getCurrentValue())
-                inputLevelRight.setTargetValue(value);
-            else
-                inputLevelRight.setCurrentAndTargetValue(value);
-        }
+        levelMeterUpdate(inputLevelLeft, inputLevelRight, buffer, numSamples);
 
         ApplyInputGain(buffer);
 
@@ -198,23 +182,7 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         waveViewer.pushBuffer(buffer);
 
         // output level meter - smooth
-        outputLevelLeft.skip(numSamples);
-        outputLevelRight.skip(numSamples);
-        {
-            const auto value = Decibels::gainToDecibels(buffer.getRMSLevel(0, 0, numSamples));
-            if (value < outputLevelLeft.getCurrentValue())
-                outputLevelLeft.setTargetValue(value);
-            else
-                outputLevelLeft.setCurrentAndTargetValue(value);
-        }
-
-        {
-            const auto value = Decibels::gainToDecibels(buffer.getRMSLevel(1, 0, numSamples));
-            if (value < outputLevelRight.getCurrentValue())
-                outputLevelRight.setTargetValue(value);
-            else
-                outputLevelRight.setCurrentAndTargetValue(value);
-        }
+        levelMeterUpdate(outputLevelLeft, outputLevelRight, buffer, numSamples);
         // ===== End Coding ===== //
 
     }
@@ -249,6 +217,27 @@ float DemoAudioProcessor::getRmsValue(const int channel, const int io) const
     if (channel == 1 && io == 1)        // output level of right channel
         return outputLevelRight.getCurrentValue();
     return 0.f;
+}
+
+void DemoAudioProcessor::levelMeterUpdate(LinearSmoothedValue<float>& levelMeterLeft, LinearSmoothedValue<float>& levelMeterRight, AudioBuffer<float>& buffer, int numSamples)
+{
+    levelMeterLeft.skip(numSamples);
+    levelMeterRight.skip(numSamples);
+    {
+        const auto value = Decibels::gainToDecibels(buffer.getRMSLevel(0, 0, numSamples));
+        if (value < levelMeterLeft.getCurrentValue())
+            levelMeterLeft.setTargetValue(value);
+        else
+            levelMeterLeft.setCurrentAndTargetValue(value);
+    }
+
+    {
+        const auto value = Decibels::gainToDecibels(buffer.getRMSLevel(1, 0, numSamples));
+        if (value < levelMeterRight.getCurrentValue())
+            levelMeterRight.setTargetValue(value);
+        else
+            levelMeterRight.setCurrentAndTargetValue(value);
+    }
 }
 
 
