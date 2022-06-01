@@ -75,11 +75,22 @@ public:
     //==============================================================================
     // levelmeter
     float getRmsValue(const int, const int) const;
+    void DemoAudioProcessor::levelMeterUpdate(
+        LinearSmoothedValue<float>& levelMeterLeft, 
+        LinearSmoothedValue<float>& levelMeterRight, 
+        AudioBuffer<float>& buffer, 
+        int numSamples);
 
     //==============================================================================
     // mode component: regular or HRTF
     int getMode();
     void setMode(int type);
+
+    //==============================================================================
+    // panner component
+    int getTheta();
+    void setTheta(int n);
+    void updateHRIRFilter();
 
 private:
     //==============================================================================
@@ -104,6 +115,13 @@ private:
 
     // mode component: mode==1 (regular), mode==2 (HRTF)
     int mode = 1;
+
+    // panner component
+    int theta = 0;
+
+    AudioSampleBuffer monoBuffer;
+    dsp::FIR::Filter<float> IR_L;
+    dsp::FIR::Filter<float> IR_R;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessor)
 };

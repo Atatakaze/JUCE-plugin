@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="eDpDwo" name="Demo" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              pluginFormats="buildStandalone">
+              pluginFormats="buildVST3">
   <MAINGROUP id="ZLyVo3" name="Demo">
     <GROUP id="{3A4810AD-3114-AA9D-F6F9-81957D70F025}" name="Source">
       <GROUP id="{D12DD16B-1F62-71B8-9D61-87E68463F0D5}" name="UI">
@@ -14,6 +14,7 @@
           <FILE id="cmuFR4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
           <FILE id="LUQsGX" name="switchBtn2.png" compile="0" resource="1" file="Source/UI/Image/switchBtn2.png"/>
         </GROUP>
+        <FILE id="mmdYNI" name="HRIR3D.h" compile="0" resource="0" file="Source/UI/HRIR3D.h"/>
         <FILE id="Xh8kDq" name="ButtonLook.cpp" compile="1" resource="0" file="Source/UI/ButtonLook.cpp"/>
         <FILE id="jjNe6b" name="ButtonLook.h" compile="0" resource="0" file="Source/UI/ButtonLook.h"/>
         <FILE id="fYwQ0K" name="ImportComponent.cpp" compile="1" resource="0"
@@ -27,6 +28,10 @@
         <FILE id="ytJiSI" name="modeComponent.cpp" compile="1" resource="0"
               file="Source/UI/modeComponent.cpp"/>
         <FILE id="glCSDr" name="modeComponent.h" compile="0" resource="0" file="Source/UI/modeComponent.h"/>
+        <FILE id="ldmTFy" name="PannerComponent.cpp" compile="1" resource="0"
+              file="Source/UI/PannerComponent.cpp"/>
+        <FILE id="PrYyhA" name="PannerComponent.h" compile="0" resource="0"
+              file="Source/UI/PannerComponent.h"/>
         <FILE id="JZ6IAA" name="SliderLook.cpp" compile="1" resource="0" file="Source/UI/SliderLook.cpp"/>
         <FILE id="QWT9Zz" name="SliderLook.h" compile="0" resource="0" file="Source/UI/SliderLook.h"/>
         <FILE id="kZXKy6" name="WaveformComponent.cpp" compile="1" resource="0"

@@ -11,7 +11,7 @@
 //==============================================================================
 DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor(&p), processor(p), valueTreeState(vts),
-    levelMeter(processor), waveformComponent(processor), modeComponent(processor)
+    levelMeter(processor), waveformComponent(processor), modeComponent(processor), pannerComponent(processor)
 {
     // Waveform
     addAndMakeVisible(waveformComponent);
@@ -57,11 +57,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     addAndMakeVisible(modeComponent);
 
     // import components
-    addAndMakeVisible(importSlider);
-    importSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-    importSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
-    slider3.setSliderColour(Colour(255, 192, 0), Colour(190, 159, 102));
-    importSlider.setLookAndFeel(&slider3);
+    addAndMakeVisible(pannerComponent);
 
     addAndMakeVisible(importComponent);
 
@@ -78,7 +74,6 @@ DemoAudioProcessorEditor::~DemoAudioProcessorEditor()
 {
     inputGainSlider.setLookAndFeel(nullptr);
     outputGainSlider.setLookAndFeel(nullptr);
-    importSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -128,8 +123,10 @@ void DemoAudioProcessorEditor::resized()
 
     // import components
     auto importArea = Rectangle<int>(panel.getX() + 2, panel.getY() + panel.getHeight() / 2 + 15, panel.getWidth() - 4, 50);
-    auto importSliderArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, 45, 45);
-    importSlider.setBounds(importSliderArea);
+    
+    // panner component
+    auto pannerComponentArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, 45, 45);
+    pannerComponent.setBounds(pannerComponentArea);
 
     auto importComponentArea = Rectangle<int>(importArea.getX(), importArea.getY(), importArea.getWidth() / 2, 50);
     importComponent.setBounds(importComponentArea);
@@ -166,5 +163,8 @@ void DemoAudioProcessorEditor::timerCallback()
         ave += processor.bufferTimeRecords[i];
     }
     ave /= 100;
+
+    ave = processor.getTheta();
+
     bufferTimeLabel.setText("Buffer Time: " + std::to_string(ave), dontSendNotification);
 }

@@ -11,6 +11,7 @@
 #include "UI/WaveformComponent.h"
 #include "UI/LevelMeterComponent.h"
 #include "UI/ImportComponent.h"
+#include "UI/PannerComponent.h"
 
 #include <string>
 
@@ -69,11 +70,11 @@ private:
     ModeComponent modeComponent;
 
     // -- import components -- //
-    Slider importSlider;
+    PannerComponent pannerComponent;
     ImportComponent importComponent;
 
     // appearence
-    SliderLook slider1, slider2, slider3;
+    SliderLook slider1, slider2;
     Image panelBg, vectorScopeBg;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessorEditor)
