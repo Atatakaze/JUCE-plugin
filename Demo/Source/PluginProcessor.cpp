@@ -6,7 +6,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "UI/HRIR3D.h"
 
 using namespace juce;
 
@@ -84,13 +83,21 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     spec.maximumBlockSize = numSamples;
     spec.numChannels = numInputChannels;
 
-    // panner component
-    //IR_L.prepare(spec);
-    //IR_R.prepare(spec);
-    //updateHRIRFilter();
-    //monoBuffer.setSize(1, numSamples);
-    //IR_L.reset();
-    //IR_R.reset();
+    std::cout << " > Filter Size: " << coeff.size() << std::endl;
+
+    // -- Using Convolution  for panning -- //
+    coeffBuffer = AudioBuffer<float>(1, (int) coeff.size());     /* Initialize the buffer */
+    coeffBuffer.copyFrom(0, 0, coeff.data(), (int) coeff.size()); /* Vector to buffer */
+    // coeffBuffer.reverse(0, 0, convInSize); /* Call this line when load params from pytorch */
+
+    panner.reset(); /* Resets the processing pipeline ready to start a new stream of data */
+    panner.loadImpulseResponse( /* Load coeff as IR */
+               std::move (coeffBuffer),
+               spec.sampleRate,
+               dsp::Convolution::Stereo::yes,
+               dsp::Convolution::Trim::no,
+               dsp::Convolution::Normalise::no);
+     panner.prepare(spec); /* Must be called before first calling process */
 
     // waveform viewer
     waveViewer.clear();
@@ -140,24 +147,13 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
 
         ApplyInputGain(buffer);
 
-        dsp::AudioBlock<float> block(buffer);
-        //dsp::ProcessContextReplacing<float> context(block);
-        //myfilter.process(context);
         // panner component
-        //auto bufferL = buffer.getWritePointer(0);
-        //auto bufferR = buffer.getWritePointer(1);
-        //const auto BLength = buffer.getNumSamples();
-        //if (getTotalNumInputChannels() == 2)
-        //{
-        //    buffer.addFrom(0, 0, buffer.getWritePointer(1), BLength);
-        //}
-        //monoBuffer.copyFrom(0, 0, buffer, 0, 0, BLength);
-        //updateHRIRFilter();
-
-        //dsp::AudioBlock<float> blockL = dsp::AudioBlock<float>(&bufferL, 1, BLength);
-        //dsp::AudioBlock<float> blockR = dsp::AudioBlock<float>(&bufferR, 1, BLength);
-        //IR_L.process(dsp::ProcessContextReplacing<float>(blockL));
-        //IR_R.process(dsp::ProcessContextReplacing<float>(blockR));
+        if (mode == 1)
+        {
+            dsp::AudioBlock<float> block(buffer);
+            dsp::ProcessContextReplacing<float> context(block);
+            panner.process(context);
+        }
 
         ApplyOutputGain(buffer);
 
@@ -246,20 +242,24 @@ panner component
 ================================================================================
 */
 
-int DemoAudioProcessor::getTheta()
+int DemoAudioProcessor::getAzimuth()
 {
-    return theta;
+    return azimuth;
 }
 
-void DemoAudioProcessor::setTheta(int n)
+void DemoAudioProcessor::setAzimuth(float angle)
 {
-    theta = n;
+    azimuth = angle;
 }
 
-void DemoAudioProcessor::updateHRIRFilter()
+int DemoAudioProcessor::getElevation()
 {
-    *(IR_L.coefficients) = dsp::FIR::Coefficients<float>(hrir_l[theta], 256);
-    *(IR_R.coefficients) = dsp::FIR::Coefficients<float>(hrir_r[theta], 256);
+    return elevation;
+}
+
+void DemoAudioProcessor::setElevation(float n)
+{
+    elevation = n;
 }
 
 

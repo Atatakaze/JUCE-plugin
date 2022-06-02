@@ -125,7 +125,7 @@ void DemoAudioProcessorEditor::resized()
     auto importArea = Rectangle<int>(panel.getX() + 2, panel.getY() + panel.getHeight() / 2 + 15, panel.getWidth() - 4, 50);
     
     // panner component
-    auto pannerComponentArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, 45, 45);
+    auto pannerComponentArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, importArea.getWidth() / 2 - 25, importArea.getHeight() - 10);
     pannerComponent.setBounds(pannerComponentArea);
 
     auto importComponentArea = Rectangle<int>(importArea.getX(), importArea.getY(), importArea.getWidth() / 2, 50);
@@ -164,7 +164,7 @@ void DemoAudioProcessorEditor::timerCallback()
     }
     ave /= 100;
 
-    ave = processor.getTheta();
+    ave = processor.getAzimuth();
 
     bufferTimeLabel.setText("Buffer Time: " + std::to_string(ave), dontSendNotification);
 }

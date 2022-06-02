@@ -14,14 +14,20 @@
 //==============================================================================
 PannerComponent::PannerComponent(DemoAudioProcessor& p) : processor(p)
 {
-    addAndMakeVisible(panner);
-    panner.setSliderStyle(Slider::RotaryVerticalDrag);
-    panner.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
-    panner.setRange(0, 360, 15);
-    panner.addListener(this);
+    addAndMakeVisible(aziSlider);
+    aziSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    aziSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    aziSlider.setRange(-180.0f, 180.0f, 1.0f);
+    aziSlider.addListener(this);
 
     sliderLook.setSliderColour(Colour(255, 192, 0), Colour(190, 159, 102));
-    panner.setLookAndFeel(&sliderLook);
+    aziSlider.setLookAndFeel(&sliderLook);
+
+    addAndMakeVisible(eleSlider);
+    eleSlider.setSliderStyle(Slider::LinearVertical);
+    eleSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    eleSlider.setRange(-40.f, 90.0f, 5.0f);
+    eleSlider.addListener(this);
 
     updateTheta();
 }
@@ -29,8 +35,10 @@ PannerComponent::PannerComponent(DemoAudioProcessor& p) : processor(p)
 
 PannerComponent::~PannerComponent()
 {
-    panner.removeListener(this);
-    panner.setLookAndFeel(nullptr);
+    aziSlider.removeListener(this);
+    aziSlider.setLookAndFeel(nullptr);
+
+    eleSlider.removeListener(this);
 }
 
 //==============================================================================
@@ -41,20 +49,28 @@ void PannerComponent::paint (Graphics& g)
 //==============================================================================
 void PannerComponent::resized()
 {
-    panner.setBounds(getLocalBounds());
+    auto bounds = getLocalBounds();
+
+    eleSlider.setBounds(bounds.removeFromLeft(20));
+    aziSlider.setBounds(bounds);
 }
 
 //==============================================================================
 void PannerComponent::sliderValueChanged(Slider* slider)
 {
-    if (slider == &panner)
+    if (slider == &aziSlider)
     {
-        processor.setTheta(panner.getValue());
+        processor.setAzimuth(aziSlider.getValue());
+    }
+    if (slider == &eleSlider)
+    {
+        processor.setElevation(eleSlider.getValue());
     }
 }
 
 //==============================================================================
 void PannerComponent::updateTheta()
 {
-    panner.setValue(processor.getTheta());
+    aziSlider.setValue(processor.getAzimuth());
+    eleSlider.setValue(processor.getElevation());
 }
