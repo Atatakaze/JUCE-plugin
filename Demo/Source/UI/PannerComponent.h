@@ -11,7 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "SliderLook.h"
+#include "SliderLook2.h"
 #include "../PluginProcessor.h"
 
 using namespace juce;
@@ -38,7 +38,7 @@ private:
 
     int azimuth, elevation;
 
-    SliderLook sliderLook;
+    RotarySliderLook sliderLook;
     Slider aziSlider, eleSlider;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PannerComponent)

@@ -21,7 +21,6 @@ PannerComponent::PannerComponent(DemoAudioProcessor& p) : processor(p)
     aziSlider.setRange(0, 360, 15);
     aziSlider.addListener(this);
 
-    sliderLook.setSliderColour(Colour(255, 192, 0), Colour(190, 159, 102));
     aziSlider.setLookAndFeel(&sliderLook);
 
     addAndMakeVisible(eleSlider);

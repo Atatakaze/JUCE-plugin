@@ -14,6 +14,8 @@
           <FILE id="cmuFR4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
           <FILE id="LUQsGX" name="switchBtn2.png" compile="0" resource="1" file="Source/UI/Image/switchBtn2.png"/>
         </GROUP>
+        <FILE id="ctR6ox" name="SliderLook2.cpp" compile="1" resource="0" file="Source/UI/SliderLook2.cpp"/>
+        <FILE id="krDera" name="SliderLook2.h" compile="0" resource="0" file="Source/UI/SliderLook2.h"/>
         <FILE id="kOvKfb" name="HRIR3D.h" compile="0" resource="0" file="Source/UI/HRIR3D.h"/>
         <FILE id="Xh8kDq" name="ButtonLook.cpp" compile="1" resource="0" file="Source/UI/ButtonLook.cpp"/>
         <FILE id="jjNe6b" name="ButtonLook.h" compile="0" resource="0" file="Source/UI/ButtonLook.h"/>
