@@ -21,7 +21,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
 
     // input gain
     addAndMakeVisible(inputGainSlider);
-    inputGainSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    inputGainSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
     inputGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
     slider1.setSliderColour(Colour(180, 136, 245), Colour(101, 95, 125));
     inputGainSlider.setLookAndFeel(&slider1);
@@ -36,7 +36,7 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
 
     // output gain
     addAndMakeVisible(outputGainSlider);
-    outputGainSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    outputGainSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
     outputGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
     slider2.setSliderColour(Colour(157, 249, 241), Colour(94, 136, 132));
     outputGainSlider.setLookAndFeel(&slider2);
