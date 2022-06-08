@@ -61,8 +61,10 @@ void PannerComponent::sliderValueChanged(Slider* slider)
 {
     if (slider == &aziSlider)
     {
-        //processor.setAzimuth(aziSlider.getValue());
         azimuth = aziSlider.getValue();
+        elevation = processor.getElevation();
+        processor.setAzimuth(azimuth);
+
         if (0 <= elevation && elevation <= 144) //if -45<= elevation <= 45
             processor.setTheta(azimuth / 15 + elevation); // the increment of azimuth is 15 degrees
         else if (168 == elevation) // if elevation = 60
@@ -78,68 +80,79 @@ void PannerComponent::sliderValueChanged(Slider* slider)
     }
     if (slider == &eleSlider)
     {
-        //processor.setElevation(eleSlider.getValue());
-        if (eleSlider.getValue() == -45)
+        elevation = eleSlider.getValue();
+
+        if (elevation == -45)
         {
             elevation = 0;
             aziSlider.setRange(0.0, 360, 15);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == -30)
+        else if (elevation == -30)
         {
             elevation = 24;
             aziSlider.setRange(0.0, 360, 15);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == -15)
+        else if (elevation == -15)
         {
             elevation = 48;
             aziSlider.setRange(0.0, 360, 15);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == 0)
+        else if (elevation == 0)
         {
             elevation = 72;
             aziSlider.setRange(0.0, 360, 15);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == 15)
+        else if (elevation == 15)
         {
             elevation = 96;
             aziSlider.setRange(0.0, 360, 15);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == 30)
+        else if (elevation == 30)
         {
             elevation = 120;
             aziSlider.setRange(0.0, 360, 15);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == 45)
+        else if (elevation == 45)
         {
             elevation = 144;
             aziSlider.setRange(0.0, 360, 15);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == 60)
+        else if (elevation == 60)
         {
             elevation = 168;
             aziSlider.setValue(0.0);
             aziSlider.setRange(0.0, 360, 30);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
-        else if (eleSlider.getValue() == 75)
+        else if (elevation == 75)
         {
             elevation = 180;
             aziSlider.setValue(0.0);
             aziSlider.setRange(0.0, 360, 60);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
         else
         {
             elevation = 186;
             aziSlider.setValue(0.0);
             processor.setTheta(elevation);
+            processor.setElevation(elevation);
         }
     }
 }
@@ -147,7 +160,9 @@ void PannerComponent::sliderValueChanged(Slider* slider)
 //==============================================================================
 void PannerComponent::updateTheta()
 {
-    //aziSlider.setValue(processor.getAzimuth());
-    //eleSlider.setValue(processor.getElevation());
-    eleSlider.setValue(0);
+    azimuth = processor.getAzimuth();
+    aziSlider.setValue(azimuth);
+
+    elevation = processor.getElevation();
+    eleSlider.setValue(elevation);
 }

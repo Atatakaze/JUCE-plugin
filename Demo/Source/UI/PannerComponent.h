@@ -36,8 +36,7 @@ public:
 private:
     DemoAudioProcessor& processor;
 
-    int azimuth = 0;
-    int elevation = 0;
+    int azimuth, elevation;
 
     SliderLook sliderLook;
     Slider aziSlider, eleSlider;

@@ -99,6 +99,7 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     //           dsp::Convolution::Trim::no,
     //           dsp::Convolution::Normalise::no);
     // panner.prepare(spec); /* Must be called before first calling process */
+    
     // panner component
     IR_L.prepare(spec);
     IR_R.prepare(spec);
@@ -161,7 +162,7 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         ApplyInputGain(buffer);
 
         // panner component
-        if (mode == 1)
+        if (mode == 2)
         {
             //dsp::AudioBlock<float> block(buffer);
             //dsp::ProcessContextReplacing<float> context(block);
@@ -270,25 +271,25 @@ panner component
 ================================================================================
 */
 
-//int DemoAudioProcessor::getAzimuth()
-//{
-//    return azimuth;
-//}
-//
-//void DemoAudioProcessor::setAzimuth(int angle)
-//{
-//    azimuth = angle;
-//}
-//
-//int DemoAudioProcessor::getElevation()
-//{
-//    return elevation;
-//}
-//
-//void DemoAudioProcessor::setElevation(int n)
-//{
-//    elevation = n;
-//}
+int DemoAudioProcessor::getAzimuth()
+{
+    return azimuth;
+}
+
+void DemoAudioProcessor::setAzimuth(int angle)
+{
+    azimuth = angle;
+}
+
+int DemoAudioProcessor::getElevation()
+{
+    return elevation;
+}
+
+void DemoAudioProcessor::setElevation(int n)
+{
+    elevation = n;
+}
 
 int DemoAudioProcessor::getTheta()
 {

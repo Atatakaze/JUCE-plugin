@@ -164,7 +164,5 @@ void DemoAudioProcessorEditor::timerCallback()
     }
     ave /= 100;
 
-    ave = processor.getTheta();
-
     bufferTimeLabel.setText("Buffer Time: " + std::to_string(ave), dontSendNotification);
 }

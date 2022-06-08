@@ -89,13 +89,15 @@ public:
 
     //==============================================================================
     // panner component
-    //int getAzimuth();
-    //void setAzimuth(int angle);
-    //
-    //int getElevation();
-    //void setElevation(int n);
+    int getAzimuth();
+    void setAzimuth(int angle);
+    
+    int getElevation();
+    void setElevation(int n);
+
     int getTheta();
     void setTheta(int angle);
+
     void updateHRIRFilter();
 
 private:
@@ -123,12 +125,14 @@ private:
     int mode = 1;
 
     // panner component
-    //int azimuth = 0;
-    //int elevation = 0;
+    int azimuth = 0;
+    int elevation = 0;
     int theta = 72;
+
     dsp::ProcessSpec spec;
     AudioSampleBuffer monoBuffer;
     dsp::FIR::Filter<float> IR_L, IR_R;
+
     //dsp::Convolution panner;
     //AudioBuffer<float> coeffBuffer;
 
