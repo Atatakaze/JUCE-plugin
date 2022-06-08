@@ -6,6 +6,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "UI/HRIR3D.h"
 
 using namespace juce;
 
@@ -83,21 +84,28 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     spec.maximumBlockSize = numSamples;
     spec.numChannels = numInputChannels;
 
-    std::cout << " > Filter Size: " << coeff.size() << std::endl;
+    //std::cout << " > Filter Size: " << coeff.size() << std::endl;
 
-    // -- Using Convolution  for panning -- //
-    coeffBuffer = AudioBuffer<float>(1, (int) coeff.size());     /* Initialize the buffer */
-    coeffBuffer.copyFrom(0, 0, coeff.data(), (int) coeff.size()); /* Vector to buffer */
-    // coeffBuffer.reverse(0, 0, convInSize); /* Call this line when load params from pytorch */
+    //// -- Using Convolution  for panning -- //
+    //coeffBuffer = AudioBuffer<float>(1, (int) coeff.size());     /* Initialize the buffer */
+    //coeffBuffer.copyFrom(0, 0, coeff.data(), (int) coeff.size()); /* Vector to buffer */
+    //// coeffBuffer.reverse(0, 0, convInSize); /* Call this line when load params from pytorch */
 
-    panner.reset(); /* Resets the processing pipeline ready to start a new stream of data */
-    panner.loadImpulseResponse( /* Load coeff as IR */
-               std::move (coeffBuffer),
-               spec.sampleRate,
-               dsp::Convolution::Stereo::yes,
-               dsp::Convolution::Trim::no,
-               dsp::Convolution::Normalise::no);
-     panner.prepare(spec); /* Must be called before first calling process */
+    //panner.reset(); /* Resets the processing pipeline ready to start a new stream of data */
+    //panner.loadImpulseResponse( /* Load coeff as IR */
+    //           std::move (coeffBuffer),
+    //           spec.sampleRate,
+    //           dsp::Convolution::Stereo::yes,
+    //           dsp::Convolution::Trim::no,
+    //           dsp::Convolution::Normalise::no);
+    // panner.prepare(spec); /* Must be called before first calling process */
+    // panner component
+    IR_L.prepare(spec);
+    IR_R.prepare(spec);
+    updateHRIRFilter();
+    monoBuffer.setSize(1, numSamples);
+    IR_L.reset();
+    IR_R.reset();
 
     // waveform viewer
     waveViewer.clear();
@@ -126,6 +134,11 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
 void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
+    auto totalNumInputChannels = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear(i, 0, buffer.getNumSamples());
 
     int numSamples = buffer.getNumSamples();
     auto begin = std::chrono::high_resolution_clock::now();
@@ -150,9 +163,24 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         // panner component
         if (mode == 1)
         {
-            dsp::AudioBlock<float> block(buffer);
-            dsp::ProcessContextReplacing<float> context(block);
-            panner.process(context);
+            //dsp::AudioBlock<float> block(buffer);
+            //dsp::ProcessContextReplacing<float> context(block);
+            //panner.process(context);
+            auto bufferL = buffer.getWritePointer(0);
+            auto bufferR = buffer.getWritePointer(1);
+            const auto BLength = buffer.getNumSamples();
+            if (totalNumInputChannels == 2)
+            {
+                buffer.addFrom(0, 0, buffer.getWritePointer(1), BLength);
+                buffer.applyGain(0.5f);
+            }
+            monoBuffer.copyFrom(0, 0, buffer, 0, 0, BLength);
+
+            updateHRIRFilter();
+            dsp::AudioBlock<float> blockL = dsp::AudioBlock<float>(&bufferL, 1, BLength);
+            dsp::AudioBlock<float> blockR = dsp::AudioBlock<float>(&bufferR, 1, BLength);
+            IR_L.process(dsp::ProcessContextReplacing<float>(blockL));
+            IR_R.process(dsp::ProcessContextReplacing<float>(blockR));
         }
 
         ApplyOutputGain(buffer);
@@ -242,24 +270,40 @@ panner component
 ================================================================================
 */
 
-int DemoAudioProcessor::getAzimuth()
+//int DemoAudioProcessor::getAzimuth()
+//{
+//    return azimuth;
+//}
+//
+//void DemoAudioProcessor::setAzimuth(int angle)
+//{
+//    azimuth = angle;
+//}
+//
+//int DemoAudioProcessor::getElevation()
+//{
+//    return elevation;
+//}
+//
+//void DemoAudioProcessor::setElevation(int n)
+//{
+//    elevation = n;
+//}
+
+int DemoAudioProcessor::getTheta()
 {
-    return azimuth;
+    return theta;
 }
 
-void DemoAudioProcessor::setAzimuth(float angle)
+void DemoAudioProcessor::setTheta(int angle)
 {
-    azimuth = angle;
+    theta = angle;
 }
 
-int DemoAudioProcessor::getElevation()
+void DemoAudioProcessor::updateHRIRFilter()
 {
-    return elevation;
-}
-
-void DemoAudioProcessor::setElevation(float n)
-{
-    elevation = n;
+    *(IR_L.coefficients) = dsp::FIR::Coefficients<float>(hrir_l[theta], 256);
+    *(IR_R.coefficients) = dsp::FIR::Coefficients<float>(hrir_r[theta], 256);
 }
 
 
