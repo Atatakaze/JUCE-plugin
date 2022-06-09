@@ -11,7 +11,12 @@
 #include <JuceHeader.h>
 #include "SliderLook2.h"
 
-//==============================================================================
+/*
+=================================================================================
+RotarySliderLook
+=================================================================================
+*/
+
 RotarySliderLook::RotarySliderLook()
 {
 }
@@ -55,4 +60,57 @@ void RotarySliderLook::drawRotarySlider(
     p.addRectangle(-1, -15, 2, 7);
     p.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY));
     g.fillPath(p);
+}
+
+
+/*
+=================================================================================
+LinearSliderLook
+=================================================================================
+*/
+
+LinearSliderLook::LinearSliderLook()
+{
+}
+
+
+LinearSliderLook::~LinearSliderLook()
+{
+}
+
+//==============================================================================
+Slider::SliderLayout LinearSliderLook::getSliderLayout(Slider& slider)
+{
+    Slider::SliderLayout layout;
+    layout.sliderBounds = slider.getLocalBounds();
+    return layout;
+}
+
+//==============================================================================
+void LinearSliderLook::drawLinearSlider(
+    Graphics& g, int x, int y, int width, int height,
+    float sliderPos, float minSliderPos, float maxSliderPos, const Slider::SliderStyle,
+    Slider& s)
+{
+    Rectangle<int> rint(x, y, width, height);
+    Rectangle<float> r = rint.toFloat().reduced(0.5f);
+
+    g.setColour(Colour(17, 17, 17));
+    g.fillRoundedRectangle(r, 5);
+
+    g.setColour(Colours::black);
+    g.drawRoundedRectangle(r, 5, 1);
+
+    float radius = (r.getWidth() - 1) / 2.f;
+
+    auto l = (r.getHeight() - radius) - (r.getY() + radius);
+    float originalPos = sliderPos / (float)height;
+
+    sliderPos = l * originalPos; //scaled to our inner size
+    
+    g.setColour(Colours::lightgrey);
+    g.fillEllipse(x + width * 0.5f - radius,
+        sliderPos,
+        radius * 2.f,
+        radius * 2.f);
 }

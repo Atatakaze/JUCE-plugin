@@ -31,3 +31,24 @@ public:
         float sliderPos, float rotaryStartAngle, float rotaryEndAngle,
         Slider& slider) override;
 };
+
+
+/*
+=================================================================================
+LinearSliderLook
+=================================================================================
+*/
+
+class LinearSliderLook : public LookAndFeel_V4
+{
+public:
+    LinearSliderLook();
+    ~LinearSliderLook();
+
+    Slider::SliderLayout getSliderLayout(Slider& slider) override;
+
+    void drawLinearSlider(
+        Graphics& g, int x, int y, int width, int height,
+        float sliderPos, float minSliderPos, float maxSliderPos, const Slider::SliderStyle,
+        Slider& s) override;
+};

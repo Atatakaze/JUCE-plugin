@@ -38,7 +38,9 @@ private:
 
     int azimuth, elevation;
 
-    RotarySliderLook sliderLook;
+    RotarySliderLook rotarySliderLook;
+    LinearSliderLook linearSliderLook;
+
     Slider aziSlider, eleSlider;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PannerComponent)

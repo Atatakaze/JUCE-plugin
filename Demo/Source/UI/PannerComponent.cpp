@@ -15,19 +15,21 @@
 PannerComponent::PannerComponent(DemoAudioProcessor& p) : processor(p)
 {
     addAndMakeVisible(aziSlider);
-    aziSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    aziSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
     aziSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
     aziSlider.setRotaryParameters(0.0, (2.0 * float_Pi), false); // make it 187 levels
     aziSlider.setRange(0, 360, 15);
     aziSlider.addListener(this);
 
-    aziSlider.setLookAndFeel(&sliderLook);
+    aziSlider.setLookAndFeel(&rotarySliderLook);
 
     addAndMakeVisible(eleSlider);
     eleSlider.setSliderStyle(Slider::LinearVertical);
     eleSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
     eleSlider.setRange(-45, 90, 15);
     eleSlider.addListener(this);
+
+    eleSlider.setLookAndFeel(&linearSliderLook);
 
     updateTheta();
 }
@@ -39,6 +41,7 @@ PannerComponent::~PannerComponent()
     aziSlider.setLookAndFeel(nullptr);
 
     eleSlider.removeListener(this);
+    eleSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -50,8 +53,14 @@ void PannerComponent::paint (Graphics& g)
 void PannerComponent::resized()
 {
     auto bounds = getLocalBounds();
+    bounds.removeFromLeft(5);
 
-    eleSlider.setBounds(bounds.removeFromLeft(20));
+    auto eleSliderArea = bounds.removeFromLeft(15);
+    eleSliderArea.removeFromTop(4);
+    eleSliderArea.removeFromBottom(4);
+    eleSliderArea.removeFromRight(5);
+    eleSlider.setBounds(eleSliderArea);
+
     aziSlider.setBounds(bounds);
 }
 
