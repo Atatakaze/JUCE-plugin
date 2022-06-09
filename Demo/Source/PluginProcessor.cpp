@@ -104,7 +104,6 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     IR_L.prepare(spec);
     IR_R.prepare(spec);
     updateHRIRFilter();
-    monoBuffer.setSize(1, numSamples);
     IR_L.reset();
     IR_R.reset();
 
@@ -173,9 +172,8 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
             if (totalNumInputChannels == 2)
             {
                 buffer.addFrom(0, 0, buffer.getWritePointer(1), BLength);
-                buffer.applyGain(0.5f);
+                buffer.applyGain(1.5);
             }
-            monoBuffer.copyFrom(0, 0, buffer, 0, 0, BLength);
 
             updateHRIRFilter();
             dsp::AudioBlock<float> blockL = dsp::AudioBlock<float>(&bufferL, 1, BLength);

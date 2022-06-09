@@ -130,7 +130,6 @@ private:
     int theta = 72;
 
     dsp::ProcessSpec spec;
-    AudioSampleBuffer monoBuffer;
     dsp::FIR::Filter<float> IR_L, IR_R;
 
     //dsp::Convolution panner;
