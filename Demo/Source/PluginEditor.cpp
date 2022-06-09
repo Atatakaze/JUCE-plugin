@@ -11,7 +11,7 @@
 //==============================================================================
 DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor(&p), processor(p), valueTreeState(vts),
-    levelMeter(processor), waveformComponent(processor), modeComponent(processor), pannerComponent(processor)
+    levelMeter(processor), waveformComponent(processor), modeComponent(processor), pannerComponent(processor), vectorScopeComponent(processor)
 {
     // Waveform
     addAndMakeVisible(waveformComponent);
@@ -61,9 +61,11 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
 
     addAndMakeVisible(importComponent);
 
+    // vector scope component
+    addAndMakeVisible(vectorScopeComponent);
+
     // appearence
     panelBg = ImageCache::getFromMemory(BinaryData::panel_png, BinaryData::panel_pngSize);
-    vectorScopeBg = ImageCache::getFromMemory(BinaryData::vectorScope_png, BinaryData::vectorScope_pngSize);
 
     setSize(610, 360);
     startTimerHz(10);
@@ -149,8 +151,8 @@ void DemoAudioProcessorEditor::resized()
     waveformComponent.setBounds(waveformArea);
 
     // vector scope
-    auto vectorScopeArea = bounds;
-    g.drawImageWithin(vectorScopeBg, bounds.getX() + 20, bounds.getY(), bounds.getWidth() - 40, bounds.getHeight(), RectanglePlacement::fillDestination);
+    auto vectorScopeArea = Rectangle<int> (bounds.getX() + 20, bounds.getY(), bounds.getWidth() - 40, bounds.getHeight());
+    vectorScopeComponent.setBounds(vectorScopeArea);
 }
 
 //==============================================================================

@@ -12,6 +12,7 @@
 #include "UI/LevelMeterComponent.h"
 #include "UI/ImportComponent.h"
 #include "UI/PannerComponent.h"
+#include "UI/VectorScopeComponent.h"
 
 #include <string>
 
@@ -66,6 +67,9 @@ private:
     // -- level meter -- //
     LevelMeterComponent levelMeter;
 
+    // -- vector scope -- //
+    VectorScopeComponent vectorScopeComponent;
+
     // -- mode component -- //
     ModeComponent modeComponent;
 
@@ -75,7 +79,7 @@ private:
 
     // appearence
     SliderLook slider1, slider2;
-    Image panelBg, vectorScopeBg;
+    Image panelBg;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessorEditor)
 };

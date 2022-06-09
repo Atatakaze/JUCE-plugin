@@ -14,6 +14,10 @@
           <FILE id="cmuFR4" name="switchBtn.png" compile="0" resource="1" file="Source/UI/Image/switchBtn.png"/>
           <FILE id="LUQsGX" name="switchBtn2.png" compile="0" resource="1" file="Source/UI/Image/switchBtn2.png"/>
         </GROUP>
+        <FILE id="ylRHyU" name="VectorScopeComponent.cpp" compile="1" resource="0"
+              file="Source/UI/VectorScopeComponent.cpp"/>
+        <FILE id="Bbgsbl" name="VectorScopeComponent.h" compile="0" resource="0"
+              file="Source/UI/VectorScopeComponent.h"/>
         <FILE id="ctR6ox" name="SliderLook2.cpp" compile="1" resource="0" file="Source/UI/SliderLook2.cpp"/>
         <FILE id="krDera" name="SliderLook2.h" compile="0" resource="0" file="Source/UI/SliderLook2.h"/>
         <FILE id="kOvKfb" name="HRIR3D.h" compile="0" resource="0" file="Source/UI/HRIR3D.h"/>
