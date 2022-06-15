@@ -38,8 +38,8 @@ private:
 
     int azimuth, elevation;
 
-    RotarySliderLook rotarySliderLook;
-    LinearSliderLook linearSliderLook;
+    //RotarySliderLook rotarySliderLook;
+    //LinearSliderLook linearSliderLook;
 
     Slider aziSlider, eleSlider;
 

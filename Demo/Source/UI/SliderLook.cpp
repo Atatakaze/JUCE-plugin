@@ -13,7 +13,6 @@
 //==============================================================================
 SliderLook::SliderLook()
 {
-    knob = ImageCache::getFromMemory(BinaryData::knob_png, BinaryData::knob_pngSize);
 }
 
 
@@ -36,7 +35,7 @@ void SliderLook::drawRotarySlider(
     auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
     auto isMouseOver = slider.isMouseOverOrDragging();
 
-    g.setColour(backColour.withAlpha(isMouseOver ? 1.0f : 0.6f));
+    g.setColour(Colour(58, 58, 58).withAlpha(isMouseOver ? 1.0f : 0.6f));
     Path outlineArc;
     outlineArc.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, 0.9f);
     outlineArc.closeSubPath();
@@ -47,32 +46,23 @@ void SliderLook::drawRotarySlider(
     filledArc.addPieSegment(rx, ry, rw, rw, rotaryStartAngle, angle, 0.9f);
     g.fillPath(filledArc);
 
-    g.drawImageWithin(knob,
-        centreX - float(jmin(width, height)) * 0.4,
-        centreY - float(jmin(width, height)) * 0.4,
-        float(jmin(width, height)) * 0.8,
-        float(jmin(width, height)) * 0.8,
-        RectanglePlacement::fillDestination);
+    g.setColour(Colours::lightgrey);
+    g.fillEllipse(
+        centreX - float(jmin(width, height)) * 0.35,
+        centreY - float(jmin(width, height)) * 0.35,
+        float(jmin(width, height)) * 0.7,
+        float(jmin(width, height)) * 0.7);
 
     // pointer
     Path p;
-    auto pointerRadius = 7;
-    p.addEllipse(-3, -13, pointerRadius, pointerRadius);
+    g.setColour(Colours::lightgrey);
+    p.addRectangle(-1, -25, 4, 10);
     p.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY));
-    g.setColour(Colours::black);
-    g.fillPath(p);
-
-    p.clear();
-    pointerRadius = 5;
-    p.addEllipse(-2, -12, pointerRadius, pointerRadius);
-    p.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY));
-    g.setColour(frontColour);
     g.fillPath(p);
 }
 
 //==============================================================================
-void SliderLook::setSliderColour(Colour colourFront, Colour colourBack)
+void SliderLook::setSliderColour(Colour colourFront)
 {
     frontColour = colourFront;
-    backColour = colourBack;
 }

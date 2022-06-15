@@ -30,8 +30,8 @@ public:
         Graphics& g, int x, int y, int width, int height,
         float sliderPos, float rotaryStartAngle, float rotaryEndAngle,
         Slider& slider) override;
-    void setSliderColour(Colour colourFront, Colour colourBack);
+    void setSliderColour(Colour colourFront);
 private:
     Image knob;
-    Colour frontColour = Colours::white, backColour = Colours::darkgrey;
+    Colour frontColour = Colours::white;
 };

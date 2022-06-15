@@ -37,7 +37,7 @@ public:
 private:
     DemoAudioProcessor& processor;
 
-    Image vectorScopeBg;
+    //Image vectorScopeBg;
 
     // point[0] -> point[1] -> point[2] -> point[3] -> point[4]
     float point[10][2];

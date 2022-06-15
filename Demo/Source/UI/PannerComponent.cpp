@@ -21,7 +21,7 @@ PannerComponent::PannerComponent(DemoAudioProcessor& p) : processor(p)
     aziSlider.setRange(0, 360, 15);
     aziSlider.addListener(this);
 
-    aziSlider.setLookAndFeel(&rotarySliderLook);
+    //aziSlider.setLookAndFeel(&rotarySliderLook);
 
     addAndMakeVisible(eleSlider);
     eleSlider.setSliderStyle(Slider::LinearVertical);
@@ -29,7 +29,7 @@ PannerComponent::PannerComponent(DemoAudioProcessor& p) : processor(p)
     eleSlider.setRange(-45, 90, 15);
     eleSlider.addListener(this);
 
-    eleSlider.setLookAndFeel(&linearSliderLook);
+    //eleSlider.setLookAndFeel(&linearSliderLook);
 
     updateTheta();
 }
@@ -38,10 +38,10 @@ PannerComponent::PannerComponent(DemoAudioProcessor& p) : processor(p)
 PannerComponent::~PannerComponent()
 {
     aziSlider.removeListener(this);
-    aziSlider.setLookAndFeel(nullptr);
+    //aziSlider.setLookAndFeel(nullptr);
 
     eleSlider.removeListener(this);
-    eleSlider.setLookAndFeel(nullptr);
+    //eleSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -53,15 +53,17 @@ void PannerComponent::paint (Graphics& g)
 void PannerComponent::resized()
 {
     auto bounds = getLocalBounds();
-    bounds.removeFromLeft(5);
 
-    auto eleSliderArea = bounds.removeFromLeft(15);
-    eleSliderArea.removeFromTop(4);
-    eleSliderArea.removeFromBottom(4);
-    eleSliderArea.removeFromRight(5);
-    eleSlider.setBounds(eleSliderArea);
+    auto eleSliderArea = bounds.removeFromRight(bounds.getWidth() / 4);
+    eleSliderArea.removeFromTop(10);
+    eleSliderArea.removeFromBottom(10);
+    eleSlider.setBounds(eleSliderArea.removeFromLeft(20));
 
-    aziSlider.setBounds(bounds);
+    auto aziSliderArea = bounds;
+    aziSliderArea.removeFromTop(10);
+    aziSliderArea.removeFromBottom(10);
+    aziSliderArea.removeFromLeft(10);
+    aziSlider.setBounds(aziSliderArea);
 }
 
 //==============================================================================
@@ -73,7 +75,7 @@ void PannerComponent::sliderValueChanged(Slider* slider)
         elevation = processor.getElevation();
         processor.setAzimuth(azimuth);
 
-        if (0 <= elevation && elevation <= 144) //if -45<= elevation <= 45
+        if (0 <= elevation && elevation <= 144) // if -45<= elevation <= 45
             processor.setTheta(azimuth / 15 + elevation); // the increment of azimuth is 15 degrees
         else if (168 == elevation) // if elevation = 60
         {

@@ -14,7 +14,7 @@
 //==============================================================================
 VectorScopeComponent::VectorScopeComponent(DemoAudioProcessor& p) : processor(p)
 {
-    vectorScopeBg = ImageCache::getFromMemory(BinaryData::vectorScope_png, BinaryData::vectorScope_pngSize);
+    //vectorScopeBg = ImageCache::getFromMemory(BinaryData::vectorScope_png, BinaryData::vectorScope_pngSize);
 
     for (int i = 0; i < 10; i++)
     {
@@ -22,7 +22,7 @@ VectorScopeComponent::VectorScopeComponent(DemoAudioProcessor& p) : processor(p)
         point[i][1] = -48.0;
     }
 
-    startTimerHz(30);
+    //startTimerHz(30);
 }
 
 
@@ -34,37 +34,37 @@ VectorScopeComponent::~VectorScopeComponent()
 void VectorScopeComponent::paint (Graphics& g)
 {    
     auto bounds = getLocalBounds();
-    g.drawImageWithin(vectorScopeBg, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), RectanglePlacement::fillDestination);
+    //g.drawImageWithin(vectorScopeBg, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), RectanglePlacement::fillDestination);
 
-    g.setColour(Colours::white);
-    g.fillEllipse(point[0][0], point[0][1], 2, 2);
+    //g.setColour(Colours::white);
+    //g.fillEllipse(point[0][0], point[0][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.9f));
-    g.fillEllipse(point[1][0], point[1][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.9f));
+    //g.fillEllipse(point[1][0], point[1][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.8f));
-    g.fillEllipse(point[2][0], point[2][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.8f));
+    //g.fillEllipse(point[2][0], point[2][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.7f));
-    g.fillEllipse(point[3][0], point[3][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.7f));
+    //g.fillEllipse(point[3][0], point[3][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.6f));
-    g.fillEllipse(point[4][0], point[4][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.6f));
+    //g.fillEllipse(point[4][0], point[4][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.5f));
-    g.fillEllipse(point[5][0], point[5][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.5f));
+    //g.fillEllipse(point[5][0], point[5][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.4f));
-    g.fillEllipse(point[6][0], point[6][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.4f));
+    //g.fillEllipse(point[6][0], point[6][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.3f));
-    g.fillEllipse(point[7][0], point[7][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.3f));
+    //g.fillEllipse(point[7][0], point[7][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.2f));
-    g.fillEllipse(point[8][0], point[8][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.2f));
+    //g.fillEllipse(point[8][0], point[8][1], 2, 2);
 
-    g.setColour(Colours::white.withBrightness(0.1f));
-    g.fillEllipse(point[9][0], point[9][1], 2, 2);
+    //g.setColour(Colours::white.withBrightness(0.1f));
+    //g.fillEllipse(point[9][0], point[9][1], 2, 2);
 }
 
 //==============================================================================
@@ -114,11 +114,5 @@ void VectorScopeComponent::mapping(float x, float y)
 Rectangle<int> VectorScopeComponent::getRenderArea()
 {
     auto bounds = getLocalBounds();
-
-    bounds.removeFromTop(80);
-    bounds.removeFromBottom(80);
-    bounds.removeFromLeft(90);
-    bounds.removeFromRight(90);
-
     return bounds;
 }
