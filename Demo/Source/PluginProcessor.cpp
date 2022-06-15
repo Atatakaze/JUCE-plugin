@@ -14,47 +14,38 @@ using namespace juce;
 DemoAudioProcessor::DemoAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
     : AudioProcessor(BusesProperties()
-#if ! JucePlugin_IsMidiEffect
-#if ! JucePlugin_IsSynth
-        .withInput("Input", AudioChannelSet::stereo(), true)
-#endif
+    #if ! JucePlugin_IsMidiEffect
+        #if ! JucePlugin_IsSynth
+            .withInput("Input", AudioChannelSet::stereo(), true)
+        #endif
         .withOutput("Output", AudioChannelSet::stereo(), true)
-#endif
-    ), waveViewer(2),
+    #endif
+    ),
 #endif
     parameters(*this, nullptr, Identifier("APVT"),
         {
-
             std::make_unique<AudioParameterFloat>(
-                    "Input Gain",      // parameter ID
-                    "Input Gain",      // parameter name
+                    "Gain",      // parameter ID
+                    "Gain",      // parameter name
                     NormalisableRange<float>(
                         -30.0f,
                         30.0f,
                         0.01f),         // min, max,step
-                     0.0f),
+                    0.0f),
             std::make_unique<AudioParameterFloat>(
-                    "Output Gain",      // parameter ID
-                    "Output Gain",      // parameter name
+                    "Mix",      // parameter ID
+                    "Mix",      // parameter name
                     NormalisableRange<float>(
-                        -30.0f,
-                        30.0f,
-                        0.01f),         // min, max,step
-                     0.0f),        // default value
+                        0.0f,
+                        100.0f,
+                        1.0f),         // min, max,step
+                    0.0f),        // default value
         })
 
 {
     // knob values
-    inputGainParameter = parameters.getRawParameterValue("Input Gain");
-    outputGainParameter = parameters.getRawParameterValue("Output Gain");
-
-    // gains
-    previousOutputGain = *outputGainParameter;
-    previousInputGain = *inputGainParameter;
-
-    // waveform
-    waveViewer.setRepaintRate(30);
-    waveViewer.setBufferSize(1024);
+    gainSliderParameter = parameters.getRawParameterValue("Gain");
+    mixSliderParameter = parameters.getRawParameterValue("Mix");
 }
 
 
@@ -82,33 +73,15 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     dsp::ProcessSpec spec;
     spec.sampleRate = hostSampleRate;
     spec.maximumBlockSize = numSamples;
-    spec.numChannels = numInputChannels;
-
-    //std::cout << " > Filter Size: " << coeff.size() << std::endl;
-
-    //// -- Using Convolution  for panning -- //
-    //coeffBuffer = AudioBuffer<float>(1, (int) coeff.size());     /* Initialize the buffer */
-    //coeffBuffer.copyFrom(0, 0, coeff.data(), (int) coeff.size()); /* Vector to buffer */
-    //// coeffBuffer.reverse(0, 0, convInSize); /* Call this line when load params from pytorch */
-
-    //panner.reset(); /* Resets the processing pipeline ready to start a new stream of data */
-    //panner.loadImpulseResponse( /* Load coeff as IR */
-    //           std::move (coeffBuffer),
-    //           spec.sampleRate,
-    //           dsp::Convolution::Stereo::yes,
-    //           dsp::Convolution::Trim::no,
-    //           dsp::Convolution::Normalise::no);
-    // panner.prepare(spec); /* Must be called before first calling process */
+    spec.numChannels = 1;
     
     // panner component
     IR_L.prepare(spec);
     IR_R.prepare(spec);
     updateHRIRFilter();
+    monoBuffer.setSize(1, numSamples);
     IR_L.reset();
     IR_R.reset();
-
-    // waveform viewer
-    waveViewer.clear();
 
     // level meter
     inputLevelLeft.reset(sampleRate, 0.5);
@@ -121,11 +94,8 @@ void DemoAudioProcessor::prepareToPlay(double sampleRate, int numSamples)
     outputLevelRight.setCurrentAndTargetValue(-100.f);
 
     // -- clear caches -- //
-    // clear gain cache
-    previousOutputGain = *outputGainParameter + 0.0;
-    previousInputGain = *inputGainParameter + 0.0;
+    previousGain = *gainSliderParameter + 0.0;
 
-    // clear bufferTimeRecords
     memset(bufferTimeRecords, 0, sizeof(bufferTimeRecords));
     recordIndex = 0;
 }
@@ -158,36 +128,29 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         // intput level meter - smooth
         levelMeterUpdate(inputLevelLeft, inputLevelRight, buffer, numSamples);
 
-        ApplyInputGain(buffer);
-
         // panner component
-        if (mode == 2)
+        auto bufferL = buffer.getWritePointer(0);
+        auto bufferR = buffer.getWritePointer(1);
+        const auto BLength = buffer.getNumSamples();
+
+        if (totalNumInputChannels == 2)
         {
-            //dsp::AudioBlock<float> block(buffer);
-            //dsp::ProcessContextReplacing<float> context(block);
-            //panner.process(context);
-            auto bufferL = buffer.getWritePointer(0);
-            auto bufferR = buffer.getWritePointer(1);
-            const auto BLength = buffer.getNumSamples();
-            if (totalNumInputChannels == 2)
-            {
-                buffer.addFrom(0, 0, buffer.getWritePointer(1), BLength);
-                buffer.applyGain(1.5);
-            }
-
-            updateHRIRFilter();
-            dsp::AudioBlock<float> blockL = dsp::AudioBlock<float>(&bufferL, 1, BLength);
-            dsp::AudioBlock<float> blockR = dsp::AudioBlock<float>(&bufferR, 1, BLength);
-            IR_L.process(dsp::ProcessContextReplacing<float>(blockL));
-            IR_R.process(dsp::ProcessContextReplacing<float>(blockR));
+            buffer.addFrom(0, 0, buffer, 1, 0, BLength);
+            buffer.copyFrom(1, 0, buffer, 0, 0, BLength);
+            buffer.applyGain(0.5f);
         }
+        monoBuffer.copyFrom(0, 0, buffer, 0, 0, BLength);
 
-        ApplyOutputGain(buffer);
+        updateHRIRFilter();
+        dsp::AudioBlock<float> blockL = dsp::AudioBlock<float>(&bufferL, 1, BLength);
+        dsp::AudioBlock<float> blockR = dsp::AudioBlock<float>(&bufferR, 1, BLength);
+        IR_L.process(dsp::ProcessContextReplacing<float>(blockL));
+        IR_R.process(dsp::ProcessContextReplacing<float>(blockR));
 
-        // waveform viewer
-        waveViewer.pushBuffer(buffer);
+        buffer.applyGain(6);
+        ApplyGain(buffer);
 
-        // outtput level meter - smooth
+        // output level meter - smooth
         levelMeterUpdate(outputLevelLeft, outputLevelRight, buffer, numSamples);
         // ===== End Coding ===== //
     }
@@ -248,23 +211,6 @@ void DemoAudioProcessor::levelMeterUpdate(LinearSmoothedValue<float>& levelMeter
 
 /*
 ================================================================================
-mode component: regular or HRTF
-================================================================================
-*/
-
-int DemoAudioProcessor::getMode()
-{
-    return mode;
-}
-
-void DemoAudioProcessor::setMode(int type)
-{
-    mode = type;
-}
-
-
-/*
-================================================================================
 panner component
 ================================================================================
 */
@@ -312,43 +258,23 @@ State Block
 ================================================================================
 */
 
-float DemoAudioProcessor::getInputGain()
+float DemoAudioProcessor::getGain()
 {
-    return powf(10, (*inputGainParameter) / 20.0);
+    return powf(10, (*gainSliderParameter) / 20.0);
 }
 
-float DemoAudioProcessor::getOutputGain()
+void DemoAudioProcessor::ApplyGain(AudioBuffer<float>& buffer)
 {
-    return powf(10, (*outputGainParameter) / 20.0);
-}
-
-void DemoAudioProcessor::ApplyInputGain(AudioBuffer<float>& buffer)
-{
-    auto currentInputGain = getInputGain();
-    if (currentInputGain == previousInputGain)
-    {
-        buffer.applyGain(currentInputGain);
-    }
-    else
-    {
-        auto numSamples = buffer.getNumSamples();
-        buffer.applyGainRamp(0, numSamples, previousInputGain, currentInputGain);
-        previousInputGain = currentInputGain;
-    }
-}
-
-void DemoAudioProcessor::ApplyOutputGain(AudioBuffer<float>& buffer)
-{
-    auto currentOutputGain = getOutputGain();
-    if (currentOutputGain == previousOutputGain)
+    auto currentOutputGain = getGain();
+    if (currentOutputGain == previousGain)
     {
         buffer.applyGain(currentOutputGain);
     }
     else
     {
         auto numSamples = buffer.getNumSamples();
-        buffer.applyGainRamp(0, numSamples, previousOutputGain, currentOutputGain);
-        previousOutputGain = currentOutputGain;
+        buffer.applyGainRamp(0, numSamples, previousGain, currentOutputGain);
+        previousGain = currentOutputGain;
     }
 }
 
@@ -399,8 +325,8 @@ bool DemoAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
         return false;
 
     // In this template code we only support mono or stereo.
-    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-        && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+    if (layouts.getMainOutputChannelSet() != AudioChannelSet::mono()
+        && layouts.getMainOutputChannelSet() != AudioChannelSet::stereo())
         return false;
 
     return true;

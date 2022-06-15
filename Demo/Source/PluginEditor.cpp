@@ -11,71 +11,61 @@
 //==============================================================================
 DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor(&p), processor(p), valueTreeState(vts),
-    levelMeter(processor), waveformComponent(processor), modeComponent(processor), pannerComponent(processor), vectorScopeComponent(processor)
+    levelMeter(processor), pannerComponent(processor), vectorScopeComponent(processor)
 {
-    // Waveform
-    addAndMakeVisible(waveformComponent);
-
     // LevelMeterComponent
     addAndMakeVisible(levelMeter);
 
-    // input gain
-    addAndMakeVisible(inputGainSlider);
-    inputGainSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    inputGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    // gain slider
+    addAndMakeVisible(gainSlider);
+    gainSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
     slider1.setSliderColour(Colour(180, 136, 245), Colour(101, 95, 125));
-    inputGainSlider.setLookAndFeel(&slider1);
-    inputGainAttachment.reset(new SliderAttachment(
-        valueTreeState, "Input Gain", inputGainSlider));
+    gainSlider.setLookAndFeel(&slider1);
+    gainSliderAttachment.reset(new SliderAttachment(
+        valueTreeState, "Gain", gainSlider));
 
-    addAndMakeVisible(inputGainLabel);
-    inputGainLabel.setText("Input Gain", dontSendNotification);
-    inputGainLabel.setFont(Font(10.0f, Font::bold));
-    inputGainLabel.setColour(Label::textColourId, Colour(180, 136, 245));
-    inputGainLabel.setJustificationType(Justification::centred);
+    addAndMakeVisible(gainSliderLabel);
+    gainSliderLabel.setText("Gain", dontSendNotification);
+    gainSliderLabel.setFont(Font(12.0f, Font::bold));
+    gainSliderLabel.setColour(Label::textColourId, Colour(180, 136, 245));
+    gainSliderLabel.setJustificationType(Justification::centred);
 
-    // output gain
-    addAndMakeVisible(outputGainSlider);
-    outputGainSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-    outputGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
+    // mix slider
+    addAndMakeVisible(mixSlider);
+    mixSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    mixSlider.setTextBoxStyle(Slider::NoTextBox, false, 80, 20);
     slider2.setSliderColour(Colour(157, 249, 241), Colour(94, 136, 132));
-    outputGainSlider.setLookAndFeel(&slider2);
-    outputGainAttachment.reset(new SliderAttachment(
-        valueTreeState, "Output Gain", outputGainSlider));
+    mixSlider.setLookAndFeel(&slider2);
+    mixSliderAttachment.reset(new SliderAttachment(
+        valueTreeState, "Mix", mixSlider));
 
-    addAndMakeVisible(outputGainLabel);
-    outputGainLabel.setText("Output Gain", dontSendNotification);
-    outputGainLabel.setFont(Font(10.0f, Font::bold));
-    outputGainLabel.setColour(Label::textColourId, Colour(157, 249, 241));
-    outputGainLabel.setJustificationType(Justification::centred);
+    addAndMakeVisible(mixSliderLabel);
+    mixSliderLabel.setText("Wet (%)", dontSendNotification);
+    mixSliderLabel.setFont(Font(14.0f, Font::bold));
+    mixSliderLabel.setColour(Label::textColourId, Colour(157, 249, 241));
+    mixSliderLabel.setJustificationType(Justification::centred);
 
     // monitoring
     addAndMakeVisible(bufferTimeLabel);
+    bufferTimeLabel.setFont(Font(14.0f));
     bufferTimeLabel.setText("Buffer Time: ", dontSendNotification);
 
-    // mode component (switch between regular mode and HRTF mode)
-    addAndMakeVisible(modeComponent);
+    //// panner components
+    //addAndMakeVisible(pannerComponent);
 
-    // import components
-    addAndMakeVisible(pannerComponent);
+    //// vector scope component
+    //addAndMakeVisible(vectorScopeComponent);
 
-    addAndMakeVisible(importComponent);
-
-    // vector scope component
-    addAndMakeVisible(vectorScopeComponent);
-
-    // appearence
-    panelBg = ImageCache::getFromMemory(BinaryData::panel_png, BinaryData::panel_pngSize);
-
-    setSize(610, 360);
+    setSize(400, 300);
     startTimerHz(10);
 }
 
 
 DemoAudioProcessorEditor::~DemoAudioProcessorEditor()
 {
-    inputGainSlider.setLookAndFeel(nullptr);
-    outputGainSlider.setLookAndFeel(nullptr);
+    gainSlider.setLookAndFeel(nullptr);
+    mixSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -93,66 +83,56 @@ void DemoAudioProcessorEditor::resized()
     Graphics g(background);
     g.fillAll(Colour(58, 58, 58));
 
+    int side = 4;
     auto bounds = getLocalBounds();
-    bounds.removeFromTop(1);
-    bounds.removeFromBottom(1);
-    bounds.removeFromLeft(1);
-    bounds.removeFromRight(1);
+    bounds.removeFromTop(side);
+    bounds.removeFromBottom(side);
+    bounds.removeFromLeft(side);
+    bounds.removeFromRight(side);
 
-    auto panelArea = bounds.removeFromRight(180);
-    bounds.removeFromRight(2);
+    auto pannerArea = bounds.removeFromTop(200);
+    pannerArea.removeFromBottom(side);
     g.setColour(Colours::black);
-    g.fillRoundedRectangle(panelArea.toFloat(), 10.f);
+    g.fillRoundedRectangle(pannerArea.toFloat(), 10.f);
+
+    auto monitoringArea = bounds.removeFromLeft(bounds.getWidth() * 0.6);
+    monitoringArea.removeFromRight(side);
+    g.fillRoundedRectangle(monitoringArea.toFloat(), 10.f);
+
+    auto mixSliderArea = bounds.removeFromLeft((bounds.getWidth() - side) * 0.5);
+    g.fillRoundedRectangle(mixSliderArea.toFloat(), 10.f);
+
+    bounds.removeFromLeft(side);
     g.fillRoundedRectangle(bounds.toFloat(), 10.f);
 
-    // panel background color
-    auto panel = Rectangle<int>(panelArea.getX() + 2, panelArea.getY() + 20, panelArea.getWidth() - 4, (panelArea.getHeight() * 0.8 ) - 20);
-    g.drawImageWithin(panelBg, panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight(), RectanglePlacement::stretchToFit);
-
-    g.setColour(Colours::red);
-
-    // input gain
-    auto inputGainArea = Rectangle<int>(panel.getX() + 65, panel.getY() + 10, 50, 60);
-    auto inputGainLabelArea = inputGainArea.removeFromBottom(10);
-    inputGainSlider.setBounds(inputGainArea);
-    inputGainLabel.setBounds(inputGainLabelArea);
-
-    // output gain
-    auto outputGainArea = Rectangle<int>(panel.getX() + 65, inputGainArea.getBottom() + 15, 50, 60);
-    auto outputGainLabelArea = outputGainArea.removeFromBottom(10);
-    outputGainSlider.setBounds(outputGainArea);
-    outputGainLabel.setBounds(outputGainLabelArea);
-
-    // import components
-    auto importArea = Rectangle<int>(panel.getX() + 2, panel.getY() + panel.getHeight() / 2 + 15, panel.getWidth() - 4, 50);
-    
-    // panner component
-    auto pannerComponentArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, importArea.getWidth() / 2 - 25, importArea.getHeight() - 10);
-    pannerComponent.setBounds(pannerComponentArea);
-
-    auto importComponentArea = Rectangle<int>(importArea.getX(), importArea.getY(), importArea.getWidth() / 2, 50);
-    importComponent.setBounds(importComponentArea);
-
-    // mode component
-    auto modeComponentArea = Rectangle<int>(panel.getX() + 4, panel.getY() + panel.getHeight() / 2 + 70, panel.getWidth() - 8, 35);
-    modeComponent.setBounds(modeComponentArea);
+    // -- level meter -- //
+    auto levelMeterArea = monitoringArea.removeFromTop(monitoringArea.getHeight() - 35);
+    levelMeterArea.removeFromLeft(15);
+    levelMeter.setBounds(levelMeterArea.removeFromLeft(135));
 
     // --- RTF monitor --- //
-    auto RTFArea = Rectangle<int>(panel.getX() + 2, panel.getY() + panel.getHeight() / 2 + 105, panel.getWidth() - 4, 20);
+    auto RTFArea = Rectangle<int>(monitoringArea.getX() + 15, monitoringArea.getY(), monitoringArea.getWidth() - 4, 35);
     bufferTimeLabel.setBounds(RTFArea);
 
-    // level meter
-    panelArea = panelArea.removeFromBottom(panelArea.getHeight() * 0.2);
-    auto levelMeterArea = panelArea.removeFromRight(panelArea.getWidth() / 4);
-    levelMeter.setBounds(levelMeterArea);
+    // mix slider
+    mixSliderArea.reduced(2);
+    auto mixSliderLabelArea = mixSliderArea.removeFromTop(25);
+    mixSlider.setBounds(mixSliderArea.reduced(4));
+    mixSliderLabel.setBounds(mixSliderLabelArea);
 
-    // waveform component
-    auto waveformArea = panelArea;
-    waveformComponent.setBounds(waveformArea);
+    // gain slider
+    bounds.reduced(2);
+    auto gainSliderLabelArea = bounds.removeFromTop(25);
+    gainSlider.setBounds(bounds.reduced(4));
+    gainSliderLabel.setBounds(gainSliderLabelArea);
+    
+    //// panner component
+    //auto pannerComponentArea = Rectangle<int>(importArea.getX() + importArea.getWidth() / 2 + 20, importArea.getY() + 5, importArea.getWidth() / 2 - 25, importArea.getHeight() - 10);
+    //pannerComponent.setBounds(pannerComponentArea);
 
-    // vector scope
-    auto vectorScopeArea = Rectangle<int> (bounds.getX() + 20, bounds.getY(), bounds.getWidth() - 40, bounds.getHeight());
-    vectorScopeComponent.setBounds(vectorScopeArea);
+    //// vector scope
+    //auto vectorScopeArea = Rectangle<int> (bounds.getX() + 20, bounds.getY(), bounds.getWidth() - 40, bounds.getHeight());
+    //vectorScopeComponent.setBounds(vectorScopeArea);
 }
 
 //==============================================================================

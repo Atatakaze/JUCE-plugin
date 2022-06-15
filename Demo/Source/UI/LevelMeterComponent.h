@@ -37,12 +37,10 @@ private:
     DemoAudioProcessor& processor;
 
     ColourGradient gradient{};
-    Image grillGrid;
+    Image grid;
 
-    float levelIL = -48.0;
-    float levelIR = -48.0;
-    float levelOL = -48.0;
-    float levelOR = -48.0;
+    float inputLevel = -48.0;
+    float outputLevel = -48.0;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LevelMeterComponent)
 };

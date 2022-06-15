@@ -7,10 +7,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "UI/SliderLook.h"
-#include "UI/ModeComponent.h"
-#include "UI/WaveformComponent.h"
 #include "UI/LevelMeterComponent.h"
-#include "UI/ImportComponent.h"
 #include "UI/PannerComponent.h"
 #include "UI/VectorScopeComponent.h"
 
@@ -46,23 +43,20 @@ private:
     // envs
     double hostSampleRate = 48000.;
 
-    // -- input gain -- //
-    Slider inputGainSlider;
-    Label inputGainLabel;
+    // -- gain -- //
+    Slider gainSlider;
+    Label gainSliderLabel;
 
-    // -- output gain -- //
-    Slider outputGainSlider;
-    Label outputGainLabel;
+    // -- mix -- //
+    Slider mixSlider;
+    Label mixSliderLabel;
 
     // -- monitor -- //
     Label bufferTimeLabel;
 
     // attachments
-    std::unique_ptr<SliderAttachment> inputGainAttachment;
-    std::unique_ptr<SliderAttachment> outputGainAttachment;
-
-    // -- waveform component -- //
-    WaveformComponent waveformComponent;
+    std::unique_ptr<SliderAttachment> gainSliderAttachment;
+    std::unique_ptr<SliderAttachment> mixSliderAttachment;
 
     // -- level meter -- //
     LevelMeterComponent levelMeter;
@@ -70,16 +64,11 @@ private:
     // -- vector scope -- //
     VectorScopeComponent vectorScopeComponent;
 
-    // -- mode component -- //
-    ModeComponent modeComponent;
-
     // -- import components -- //
     PannerComponent pannerComponent;
-    ImportComponent importComponent;
 
     // appearence
     SliderLook slider1, slider2;
-    Image panelBg;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessorEditor)
 };

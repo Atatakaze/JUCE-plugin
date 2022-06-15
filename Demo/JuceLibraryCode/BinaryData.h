@@ -8,26 +8,17 @@
 
 namespace BinaryData
 {
+    extern const char*   bulbGrid_png;
+    const int            bulbGrid_pngSize = 7468;
+
     extern const char*   vectorScope_png;
     const int            vectorScope_pngSize = 45794;
-
-    extern const char*   panel_png;
-    const int            panel_pngSize = 15591;
-
-    extern const char*   grillGrid_png;
-    const int            grillGrid_pngSize = 5835;
 
     extern const char*   knob_png;
     const int            knob_pngSize = 33707;
 
-    extern const char*   switchBtn_png;
-    const int            switchBtn_pngSize = 12099;
-
-    extern const char*   switchBtn2_png;
-    const int            switchBtn2_pngSize = 6119;
-
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 6;
+    const int namedResourceListSize = 3;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
