@@ -100,6 +100,9 @@ public:
 
     void updateHRIRFilter();
 
+    // vectorscope component
+    AudioBuffer<float>& getBuffer() { return wBuffer; }
+
 private:
     //==============================================================================
     AudioProcessorValueTreeState parameters;
@@ -197,7 +200,9 @@ private:
     //        -0.000009290744190889,
     //        0.000000000000000000,
     //};
-
+    
+    // vectorscope component
+    AudioBuffer<float> wBuffer;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessor)
 };

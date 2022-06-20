@@ -32,15 +32,15 @@ public:
     void timerCallback() override;
 
     // rotation matrix
-    void mapping(float x, float y);
+    float* mapping(float x, float y);
     Rectangle<int> getRenderArea();
 private:
     DemoAudioProcessor& processor;
 
     Image vectorScopeBg;
 
-    // point[0] -> point[1] -> point[2] -> point[3] -> point[4]
-    float point[10][2];
+    Path p;
+    std::vector<float> pointsX, pointsY;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VectorScopeComponent)
 };

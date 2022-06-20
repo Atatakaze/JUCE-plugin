@@ -191,6 +191,8 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         // waveform viewer
         waveViewer.pushBuffer(buffer);
 
+        wBuffer = buffer;
+
         // outtput level meter - smooth
         levelMeterUpdate(outputLevelLeft, outputLevelRight, buffer, numSamples);
         // ===== End Coding ===== //
