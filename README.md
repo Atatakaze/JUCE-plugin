@@ -2,15 +2,13 @@
 
 > Build audio plug-in with JUCE framework.
 
-## **Demo** ##
+## **Distortion** ##
 
 - **Program** 
 
-  > An audio plug-in with the spectrum and the level meter. 
+  > Distortion plug-in with the spectrum and the level meter. 
   
-  <img height= 300 src="https://user-images.githubusercontent.com/89720769/166882493-39eabea1-13f0-48aa-8618-a968b705c6fa.png"> 
-  
-  We can use Input Gain Slider and Output Gain Slider to control the distortion level and the output level of this plug-in. The button in the middle of can change the different distortion types. There are four of them to choose, including tanh, arctan, soft clipping and hard clipping. The window below the distortion label shows the characteristic function of the current using distortion type. The button with two arrows can turn on and of the spectrum. The vertical level meters are the input level and the output level while horizontal ones are the left and right channel.
+  <img height= 300 src="https://user-images.githubusercontent.com/89720769/174529189-52b72653-5af7-47a3-aa85-c245391ed4d2.png"> 
   
 - **Component** 
   
@@ -33,3 +31,19 @@
   - **UI/CharacteristicFunctionComponent**
 
     Providing different distortion type to choose from.
+
+## **Spatializer** ##
+
+- **Program** 
+
+  > Spatializer with the vectorscope and waveform analyzer. 
+  
+  <img height= 300 src="https://user-images.githubusercontent.com/89720769/174529614-4e6a5805-3bc0-4f8d-8159-3802d0954e8c.png"> 
+  
+  ## **HRTF** ##
+
+- **Program** 
+
+  > HRTF plug-in with the vector scope and level meter. 
+  
+  <img height= 300 src="https://i.imgur.com/1TsqWFT.png"> 
