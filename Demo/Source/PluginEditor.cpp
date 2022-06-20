@@ -51,11 +51,11 @@ DemoAudioProcessorEditor::DemoAudioProcessorEditor(DemoAudioProcessor& p, AudioP
     bufferTimeLabel.setFont(Font(14.0f));
     bufferTimeLabel.setText("Buffer Time: ", dontSendNotification);
 
-    // panner components
-    addAndMakeVisible(pannerComponent);
-
     // vector scope component
     addAndMakeVisible(vectorScopeComponent);
+
+    // panner components
+    addAndMakeVisible(pannerComponent);
 
     setSize(360, 300);
     startTimerHz(10);
@@ -131,13 +131,13 @@ void DemoAudioProcessorEditor::resized()
     bounds.removeFromRight(8);
     gainSliderLabel.setBounds(gainSliderLabelArea);
     gainSlider.setBounds(bounds);
-    
-    // panner component
-    pannerComponent.setBounds(pannerArea);
 
     // vector scope
-    auto vectorScopeArea = Rectangle<int> (80, 45, 120, 110);
+    auto vectorScopeArea = Rectangle<int> (80, 45, 120, 130);
     vectorScopeComponent.setBounds(vectorScopeArea);
+
+    // panner component
+    pannerComponent.setBounds(pannerArea);
 }
 
 //==============================================================================

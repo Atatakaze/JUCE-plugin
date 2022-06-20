@@ -37,8 +37,8 @@ DemoAudioProcessor::DemoAudioProcessor()
                     "Mix",      // parameter name
                     NormalisableRange<float>(
                         0.0f,
-                        100.0f,
-                        1.0f),         // min, max,step
+                        1.0f,
+                        0.01f),         // min, max,step
                     0.0f),        // default value
         })
 
@@ -147,8 +147,18 @@ void DemoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& mi
         IR_L.process(dsp::ProcessContextReplacing<float>(blockL));
         IR_R.process(dsp::ProcessContextReplacing<float>(blockR));
 
+        float dryRatio = 1.0 - *mixSliderParameter;
+        for (auto i = 0; i < BLength; i++)
+        {
+            const auto monoInput = *(monoBuffer.getReadPointer(0, i));
+            bufferL[i] = *mixSliderParameter * bufferL[i] + dryRatio * monoInput;
+            bufferR[i] = *mixSliderParameter * bufferR[i] + dryRatio * monoInput;
+        }
+
         buffer.applyGain(6);
         ApplyGain(buffer);
+
+        wBuffer = buffer;
 
         // output level meter - smooth
         levelMeterUpdate(outputLevelLeft, outputLevelRight, buffer, numSamples);

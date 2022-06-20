@@ -70,11 +70,15 @@ public:
     //==============================================================================
     // levelmeter
     float getRmsValue(const int channel, const int io) const;
-    void DemoAudioProcessor::levelMeterUpdate(
+    void levelMeterUpdate(
         LinearSmoothedValue<float>& leftChannelLevel, 
         LinearSmoothedValue<float>& rightChannelLevel, 
         AudioBuffer<float>& buffer, 
         int numSamples);
+
+    //==============================================================================
+    // vectorscope component
+    AudioBuffer<float>& getBuffer() { return wBuffer; };
 
     //==============================================================================
     // panner component
@@ -116,6 +120,9 @@ private:
     dsp::ProcessSpec spec;
     AudioSampleBuffer monoBuffer;
     dsp::FIR::Filter<float> IR_L, IR_R;
+
+    // vector scope
+    AudioBuffer<float> wBuffer;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DemoAudioProcessor)
 };
